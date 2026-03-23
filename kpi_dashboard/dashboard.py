@@ -17,14 +17,17 @@ from kpi_dashboard.analytics import (
     targets_for_kpi,
 )
 from kpi_dashboard.models import KPIDefinition, KPIValueKind, format_value, period_sort_key
-from kpi_dashboard.store import load_or_bootstrap_dataset
+from kpi_dashboard.store import load_or_bootstrap_dataset, load_or_create_demo_dataset
 
 DATA_PATH = Path("data/kpis.json")
+DEMO_DATA_PATH = Path("data/kpis_demo.json")
 WORKBOOK_PATH = Path("plan/Projektbericht Innovationsprojekte.xlsx")
 
 
 @st.cache_data(show_spinner=False)
-def _load_dataset():
+def _load_dataset(use_demo_data: bool):
+    if use_demo_data:
+        return load_or_create_demo_dataset(DEMO_DATA_PATH, DATA_PATH, WORKBOOK_PATH)
     return load_or_bootstrap_dataset(DATA_PATH, WORKBOOK_PATH)
 
 
@@ -35,7 +38,15 @@ def render_app() -> None:
         page_icon=":material/query_stats:",
     )
 
-    dataset = _load_dataset()
+    with st.sidebar:
+        st.title("Filter")
+        use_demo_data = st.toggle(
+            "Demomodus",
+            value=False,
+            help="Verwendet eine separate Demo-JSON mit künstlichen Ist-Werten.",
+        )
+
+    dataset = _load_dataset(use_demo_data)
     periods = available_periods(dataset)
     if not periods:
         st.error("Keine Ziel- oder Ist-Stände verfügbar.")
@@ -45,7 +56,6 @@ def render_app() -> None:
     sorted_groups = sorted(group_options.items(), key=lambda item: item[1].casefold())
 
     with st.sidebar:
-        st.title("Filter")
         selected_group_label = st.selectbox(
             "Projektgruppe",
             options=["Alle Gruppen", *[name for _, name in sorted_groups]],
@@ -70,7 +80,7 @@ def render_app() -> None:
         selected_period = st.selectbox("Berichtsperiode", options=periods, index=len(periods) - 1)
 
         st.caption("Operative Datenquelle")
-        st.code(str(DATA_PATH))
+        st.code(str(DEMO_DATA_PATH if use_demo_data else DATA_PATH))
 
     st.title("Innovationsprojekte KPI Dashboard")
     st.caption("Fokus auf Projekte, Zielwerte und Ist-Stände je KPI.")

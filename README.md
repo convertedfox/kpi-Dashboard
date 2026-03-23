@@ -14,7 +14,13 @@ uv run streamlit run main.py
 
 - `plan/Projektbericht Innovationsprojekte.xlsx` dient als fachlicher Seed für Projekte, KPI-Metadaten und Jahreszielwerte.
 - `data/kpis.json` ist die operative Source of Truth.
+- `data/kpis_demo.json` enthält deterministische Demo-Ist-Werte für den Frontend-Demomodus.
 - Neue KPI-Stände werden über eine deutschsprachige Excel-Vorlage importiert.
+
+## Demomodus
+
+- Im Sidebar-Frontend kann `Demomodus` eingeschaltet werden.
+- Dann verwendet die App `data/kpis_demo.json` statt `data/kpis.json`.
 
 ## Admin-Kommandos
 

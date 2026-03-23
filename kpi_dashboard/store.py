@@ -4,6 +4,7 @@ import tempfile
 from pathlib import Path
 
 from kpi_dashboard.bootstrap import build_dataset_from_workbook
+from kpi_dashboard.demo_data import build_demo_dataset
 from kpi_dashboard.models import KPIDataset
 
 
@@ -32,3 +33,17 @@ def load_or_bootstrap_dataset(data_path: Path, workbook_path: Path) -> KPIDatase
     dataset = build_dataset_from_workbook(workbook_path)
     save_dataset(dataset, data_path)
     return dataset
+
+
+def load_or_create_demo_dataset(
+    demo_data_path: Path,
+    data_path: Path,
+    workbook_path: Path,
+) -> KPIDataset:
+    if demo_data_path.exists():
+        return load_dataset(demo_data_path)
+
+    base_dataset = load_or_bootstrap_dataset(data_path, workbook_path)
+    demo_dataset = build_demo_dataset(base_dataset)
+    save_dataset(demo_dataset, demo_data_path)
+    return demo_dataset
