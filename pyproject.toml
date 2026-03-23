@@ -1,7 +1,37 @@
 [project]
 name = "1066-kpi-dashboard"
 version = "0.1.0"
-description = "Add your description here"
+description = "Streamlit dashboard for project KPIs with JSON storage and Excel imports."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "openpyxl>=3.1.5",
+    "pandas>=2.2.3",
+    "pydantic>=2.11.0",
+    "streamlit>=1.49.0",
+]
+
+[project.scripts]
+kpi-dashboard-admin = "kpi_dashboard.cli:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18.2",
+    "pytest>=8.4.2",
+    "ruff>=0.13.0",
+]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["openpyxl", "openpyxl.*", "pandas", "pandas.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

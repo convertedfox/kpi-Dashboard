@@ -1,0 +1,1636 @@
+{
+  "portfolio_name": "Projekt-Controlling Innovationsprojekte",
+  "projects": [
+    {
+      "project_id": "1.1",
+      "project_name": "Beratungsprojekt VuV",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb"
+    },
+    {
+      "project_id": "1.2",
+      "project_name": "Skill Gap Analyzer",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb"
+    },
+    {
+      "project_id": "1.3",
+      "project_name": "Match making-Consulting",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb"
+    },
+    {
+      "project_id": "1.4",
+      "project_name": "Relationship Management-Center",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb"
+    },
+    {
+      "project_id": "2.1",
+      "project_name": "Aufbau Alumni-Management",
+      "group_id": "2",
+      "group_name": "Alumni-Management"
+    },
+    {
+      "project_id": "3.1",
+      "project_name": "Modul-O-Mat 2.0",
+      "group_id": "3",
+      "group_name": "Digitalisierung"
+    },
+    {
+      "project_id": "3.2",
+      "project_name": "ZuS Infrastruktur incl Shop",
+      "group_id": "3",
+      "group_name": "Digitalisierung"
+    },
+    {
+      "project_id": "3.3",
+      "project_name": "CRM incl. Mautic",
+      "group_id": "3",
+      "group_name": "Digitalisierung"
+    },
+    {
+      "project_id": "3.4",
+      "project_name": "Angebots-DB incl. MC System",
+      "group_id": "3",
+      "group_name": "Digitalisierung"
+    },
+    {
+      "project_id": "3.5",
+      "project_name": "Aufbau digitaler Lehrformen",
+      "group_id": "3",
+      "group_name": "Digitalisierung"
+    },
+    {
+      "project_id": "4.1",
+      "project_name": "Interkulturelle Kompetenzen fördern",
+      "group_id": "4",
+      "group_name": "Internationalisierung"
+    },
+    {
+      "project_id": "4.2",
+      "project_name": "Auslandsmobilität steigern",
+      "group_id": "4",
+      "group_name": "Internationalisierung"
+    },
+    {
+      "project_id": "4.3",
+      "project_name": "Incoming-Studierende gewinnen",
+      "group_id": "4",
+      "group_name": "Internationalisierung"
+    },
+    {
+      "project_id": "5.1",
+      "project_name": "Kompetenzmapping",
+      "group_id": "5",
+      "group_name": "Forschung"
+    },
+    {
+      "project_id": "5.2",
+      "project_name": "Forschungsinstitute",
+      "group_id": "5",
+      "group_name": "Forschung"
+    },
+    {
+      "project_id": "5.3",
+      "project_name": "Promotionsförderung",
+      "group_id": "5",
+      "group_name": "Forschung"
+    },
+    {
+      "project_id": "5.4",
+      "project_name": "Drittmitteleinwerbung",
+      "group_id": "5",
+      "group_name": "Forschung"
+    },
+    {
+      "project_id": "5.5",
+      "project_name": "Weiterbidlungsprogramme",
+      "group_id": "5",
+      "group_name": "Forschung"
+    },
+    {
+      "project_id": "6.1",
+      "project_name": "Projektmanagement",
+      "group_id": "6",
+      "group_name": "Re-Engineering"
+    },
+    {
+      "project_id": "6.2",
+      "project_name": "Mitarbeiterschulungen",
+      "group_id": "6",
+      "group_name": "Re-Engineering"
+    }
+  ],
+  "kpis": [
+    {
+      "kpi_id": "1.1::roadmap-zur-umsetzung-des-hubs",
+      "project_id": "1.1",
+      "project_name": "Beratungsprojekt VuV",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "Roadmap zur Umsetzung des Hubs",
+      "unit": "Ja/Nein",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Red-Green-Bullet",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "boolean",
+      "max_value": null
+    },
+    {
+      "kpi_id": "1.2::mvp-mit-validiertem-tool-und-prozess",
+      "project_id": "1.2",
+      "project_name": "Skill Gap Analyzer",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "MVP mit validiertem Tool und Prozess",
+      "unit": "Ja/Nein",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Red-Green-Bullet",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "boolean",
+      "max_value": null
+    },
+    {
+      "kpi_id": "1.2::produktionsreifes-tool",
+      "project_id": "1.2",
+      "project_name": "Skill Gap Analyzer",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "Produktionsreifes Tool",
+      "unit": "Ja/Nein",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Red-Green-Bullet",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "boolean",
+      "max_value": null
+    },
+    {
+      "kpi_id": "1.2::deckungsbeitrag-ab-jahr-4",
+      "project_id": "1.2",
+      "project_name": "Skill Gap Analyzer",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "Deckungsbeitrag ab Jahr 4",
+      "unit": "Euro",
+      "source": "FIS/SAP",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "Ein FIS/SAP-export für alle KPIs die darauf basieren.",
+      "value_kind": "currency",
+      "max_value": null
+    },
+    {
+      "kpi_id": "1.3::erfolgreiche-match-makings",
+      "project_id": "1.3",
+      "project_name": "Match making-Consulting",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "erfolgreiche Match-Makings",
+      "unit": "Anzahl",
+      "source": "Daten der Fachabteilung",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "??",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "1.3::deckungsbeitrag-ab-jahr-4",
+      "project_id": "1.3",
+      "project_name": "Match making-Consulting",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "Deckungsbeitrag ab Jahr 4",
+      "unit": "Euro",
+      "source": "FIS/SAP",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "currency",
+      "max_value": null
+    },
+    {
+      "kpi_id": "1.4::relationship-management-center",
+      "project_id": "1.4",
+      "project_name": "Relationship Management-Center",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "Relationship Management Center",
+      "unit": "Anzahl",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "4 Red-Green-Bullets",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "ordinal",
+      "max_value": 4
+    },
+    {
+      "kpi_id": "1.4::deckungsbeitrag-ab-jahr-4",
+      "project_id": "1.4",
+      "project_name": "Relationship Management-Center",
+      "group_id": "1",
+      "group_name": "Matchmaking, Vermarktung und Vertrieb",
+      "kpi_name": "Deckungsbeitrag ab Jahr 4",
+      "unit": "Euro",
+      "source": "FIS/SAP",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "currency",
+      "max_value": null
+    },
+    {
+      "kpi_id": "2.1::kontakt-menge-alumni",
+      "project_id": "2.1",
+      "project_name": "Aufbau Alumni-Management",
+      "group_id": "2",
+      "group_name": "Alumni-Management",
+      "kpi_name": "Kontakt-Menge Alumni",
+      "unit": "Anzahl",
+      "source": "CRM",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "2.1::reaktionsmenge-alumni",
+      "project_id": "2.1",
+      "project_name": "Aufbau Alumni-Management",
+      "group_id": "2",
+      "group_name": "Alumni-Management",
+      "kpi_name": "Reaktionsmenge Alumni",
+      "unit": "Anzahl",
+      "source": "CRM",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "2.1::ubergangsquote-dhbw-ba-ma",
+      "project_id": "2.1",
+      "project_name": "Aufbau Alumni-Management",
+      "group_id": "2",
+      "group_name": "Alumni-Management",
+      "kpi_name": "Übergangsquote DHBW BA / MA",
+      "unit": "%",
+      "source": "Filero/CRM",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "percentage",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.1::besucher-modul-o-mat-2-0",
+      "project_id": "3.1",
+      "project_name": "Modul-O-Mat 2.0",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Besucher Modul-O-Mat 2.0",
+      "unit": "Anzahl",
+      "source": "Modul-O-Mat",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.1::abgeschlossene-curricula",
+      "project_id": "3.1",
+      "project_name": "Modul-O-Mat 2.0",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Abgeschlossene Curricula",
+      "unit": "Anzahl",
+      "source": "Modul-O-Mat",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.1::beratungsgesprache-mit-modul-o-mat",
+      "project_id": "3.1",
+      "project_name": "Modul-O-Mat 2.0",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Beratungsgespräche mit Modul-O-Mat",
+      "unit": "Anzahl",
+      "source": "WLs - QM",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.2::kunden-im-zus-shop",
+      "project_id": "3.2",
+      "project_name": "ZuS Infrastruktur incl Shop",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Kunden im ZuS-Shop",
+      "unit": "Anzahl",
+      "source": "Shopsystem",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.2::buchungen-im-zus-shop",
+      "project_id": "3.2",
+      "project_name": "ZuS Infrastruktur incl Shop",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Buchungen im ZuS-Shop",
+      "unit": "Anzahl",
+      "source": "Shopsystem",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.2::prozesse-uber-zus-infrastruktur",
+      "project_id": "3.2",
+      "project_name": "ZuS Infrastruktur incl Shop",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Prozesse über ZuS-Infrastruktur",
+      "unit": "%",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Torte",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "percentage",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.3::anzahl-leads-uber-crm",
+      "project_id": "3.3",
+      "project_name": "CRM incl. Mautic",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Anzahl Leads über CRM",
+      "unit": "Anzahl",
+      "source": "CRM",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.3::anzahl-mailings-uber-mautic",
+      "project_id": "3.3",
+      "project_name": "CRM incl. Mautic",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Anzahl Mailings über Mautic",
+      "unit": "Anzahl",
+      "source": "Mautic",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.3::anzahl-b2b-aktivitaten-im-crm",
+      "project_id": "3.3",
+      "project_name": "CRM incl. Mautic",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Anzahl B2B Aktivitäten im CRM",
+      "unit": "Anzahl",
+      "source": "CRM",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.4::ubernahme-angebotsdaten-in-db",
+      "project_id": "3.4",
+      "project_name": "Angebots-DB incl. MC System",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Übernahme Angebotsdaten in DB",
+      "unit": "%",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Torte",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "percentage",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.4::prozessabdeckung-in-db",
+      "project_id": "3.4",
+      "project_name": "Angebots-DB incl. MC System",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Prozessabdeckung in DB",
+      "unit": "%",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Torte",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "percentage",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.4::anzahl-mcs-im-system",
+      "project_id": "3.4",
+      "project_name": "Angebots-DB incl. MC System",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Anzahl MCs im System",
+      "unit": "Anzahl",
+      "source": "Filero",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.5::anzahl-an-modulen-im-n-1-format",
+      "project_id": "3.5",
+      "project_name": "Aufbau digitaler Lehrformen",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Anzahl an Modulen im N=1 Format",
+      "unit": "Anzahl",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.5::einsparungen-durch-n-1",
+      "project_id": "3.5",
+      "project_name": "Aufbau digitaler Lehrformen",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Einsparungen durch N=1",
+      "unit": "Euro",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "currency",
+      "max_value": null
+    },
+    {
+      "kpi_id": "3.5::studierende-in-digitalen-modulen",
+      "project_id": "3.5",
+      "project_name": "Aufbau digitaler Lehrformen",
+      "group_id": "3",
+      "group_name": "Digitalisierung",
+      "kpi_name": "Studierende in digitalen Modulen",
+      "unit": "Anzahl",
+      "source": "Filero",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "4.1::anzahl-seminar-teilnehmer",
+      "project_id": "4.1",
+      "project_name": "Interkulturelle Kompetenzen fördern",
+      "group_id": "4",
+      "group_name": "Internationalisierung",
+      "kpi_name": "Anzahl Seminar-Teilnehmer",
+      "unit": "Anzahl",
+      "source": "manuell opt Filero?",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "4.2::anzahl-outgoings",
+      "project_id": "4.2",
+      "project_name": "Auslandsmobilität steigern",
+      "group_id": "4",
+      "group_name": "Internationalisierung",
+      "kpi_name": "Anzahl Outgoings",
+      "unit": "Anzahl",
+      "source": "manuell opt Filero?",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "4.3::anzahl-incomings",
+      "project_id": "4.3",
+      "project_name": "Incoming-Studierende gewinnen",
+      "group_id": "4",
+      "group_name": "Internationalisierung",
+      "kpi_name": "Anzahl Incomings",
+      "unit": "Anzahl",
+      "source": "manuell opt Filero?",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "5.1::landkarte",
+      "project_id": "5.1",
+      "project_name": "Kompetenzmapping",
+      "group_id": "5",
+      "group_name": "Forschung",
+      "kpi_name": "Landkarte",
+      "unit": "Ja/Nein",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Red-Green-Bullet",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "boolean",
+      "max_value": null
+    },
+    {
+      "kpi_id": "5.2::angedockte-institute",
+      "project_id": "5.2",
+      "project_name": "Forschungsinstitute",
+      "group_id": "5",
+      "group_name": "Forschung",
+      "kpi_name": "Angedockte Institute",
+      "unit": "Anzahl",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "5 Red-Green-Bullets",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "ordinal",
+      "max_value": 5
+    },
+    {
+      "kpi_id": "5.3::ipf-geforderte-promotionen",
+      "project_id": "5.3",
+      "project_name": "Promotionsförderung",
+      "group_id": "5",
+      "group_name": "Forschung",
+      "kpi_name": "IPF-geförderte Promotionen",
+      "unit": "Anzahl",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "5.4::drittmittel",
+      "project_id": "5.4",
+      "project_name": "Drittmitteleinwerbung",
+      "group_id": "5",
+      "group_name": "Forschung",
+      "kpi_name": "Drittmittel",
+      "unit": "Euro",
+      "source": "FIS/SAP",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Export-Import",
+      "note": "",
+      "value_kind": "currency",
+      "max_value": null
+    },
+    {
+      "kpi_id": "5.5::platzierte-wwb-progr",
+      "project_id": "5.5",
+      "project_name": "Weiterbidlungsprogramme",
+      "group_id": "5",
+      "group_name": "Forschung",
+      "kpi_name": "Platzierte WWB-Progr.",
+      "unit": "Anzahl",
+      "source": "manuell / Filero?",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    },
+    {
+      "kpi_id": "6.1::projekte-on-time-on-scope-on-budget",
+      "project_id": "6.1",
+      "project_name": "Projektmanagement",
+      "group_id": "6",
+      "group_name": "Re-Engineering",
+      "kpi_name": "Projekte on Time, on Scope, on Budget",
+      "unit": "%",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Torte",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "percentage",
+      "max_value": null
+    },
+    {
+      "kpi_id": "6.2::anzahl-schulungsbelegungen",
+      "project_id": "6.2",
+      "project_name": "Mitarbeiterschulungen",
+      "group_id": "6",
+      "group_name": "Re-Engineering",
+      "kpi_name": "Anzahl Schulungsbelegungen",
+      "unit": "Anzahl",
+      "source": "manuell",
+      "frequency": "1/2 jährlich",
+      "display_hint": "Balken-Diagramm",
+      "data_logistics": "Abfrageformular",
+      "note": "",
+      "value_kind": "number",
+      "max_value": null
+    }
+  ],
+  "targets": [
+    {
+      "kpi_id": "1.1::roadmap-zur-umsetzung-des-hubs",
+      "period": "2026-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.1::roadmap-zur-umsetzung-des-hubs",
+      "period": "2027-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.1::roadmap-zur-umsetzung-des-hubs",
+      "period": "2028-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.1::roadmap-zur-umsetzung-des-hubs",
+      "period": "2029-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.1::roadmap-zur-umsetzung-des-hubs",
+      "period": "2030-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.1::roadmap-zur-umsetzung-des-hubs",
+      "period": "2031-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.2::deckungsbeitrag-ab-jahr-4",
+      "period": "2029-H2",
+      "value": 10000
+    },
+    {
+      "kpi_id": "1.2::deckungsbeitrag-ab-jahr-4",
+      "period": "2030-H2",
+      "value": 20000
+    },
+    {
+      "kpi_id": "1.2::deckungsbeitrag-ab-jahr-4",
+      "period": "2031-H2",
+      "value": 30000
+    },
+    {
+      "kpi_id": "1.2::mvp-mit-validiertem-tool-und-prozess",
+      "period": "2026-H2",
+      "value": false
+    },
+    {
+      "kpi_id": "1.2::produktionsreifes-tool",
+      "period": "2028-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.2::produktionsreifes-tool",
+      "period": "2029-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.2::produktionsreifes-tool",
+      "period": "2030-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.2::produktionsreifes-tool",
+      "period": "2031-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "1.3::deckungsbeitrag-ab-jahr-4",
+      "period": "2027-H2",
+      "value": 10000
+    },
+    {
+      "kpi_id": "1.3::deckungsbeitrag-ab-jahr-4",
+      "period": "2028-H2",
+      "value": 30000
+    },
+    {
+      "kpi_id": "1.3::deckungsbeitrag-ab-jahr-4",
+      "period": "2029-H2",
+      "value": 100000
+    },
+    {
+      "kpi_id": "1.3::deckungsbeitrag-ab-jahr-4",
+      "period": "2030-H2",
+      "value": 130000
+    },
+    {
+      "kpi_id": "1.3::deckungsbeitrag-ab-jahr-4",
+      "period": "2031-H2",
+      "value": 200000
+    },
+    {
+      "kpi_id": "1.3::erfolgreiche-match-makings",
+      "period": "2027-H2",
+      "value": 5
+    },
+    {
+      "kpi_id": "1.3::erfolgreiche-match-makings",
+      "period": "2028-H2",
+      "value": 10
+    },
+    {
+      "kpi_id": "1.3::erfolgreiche-match-makings",
+      "period": "2029-H2",
+      "value": 30
+    },
+    {
+      "kpi_id": "1.3::erfolgreiche-match-makings",
+      "period": "2030-H2",
+      "value": 40
+    },
+    {
+      "kpi_id": "1.3::erfolgreiche-match-makings",
+      "period": "2031-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "1.4::deckungsbeitrag-ab-jahr-4",
+      "period": "2027-H2",
+      "value": 30000
+    },
+    {
+      "kpi_id": "1.4::deckungsbeitrag-ab-jahr-4",
+      "period": "2028-H2",
+      "value": 60000
+    },
+    {
+      "kpi_id": "1.4::deckungsbeitrag-ab-jahr-4",
+      "period": "2029-H2",
+      "value": 100000
+    },
+    {
+      "kpi_id": "1.4::deckungsbeitrag-ab-jahr-4",
+      "period": "2030-H2",
+      "value": 200000
+    },
+    {
+      "kpi_id": "1.4::deckungsbeitrag-ab-jahr-4",
+      "period": "2031-H2",
+      "value": 200000
+    },
+    {
+      "kpi_id": "1.4::relationship-management-center",
+      "period": "2026-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "1.4::relationship-management-center",
+      "period": "2027-H2",
+      "value": 3
+    },
+    {
+      "kpi_id": "1.4::relationship-management-center",
+      "period": "2028-H2",
+      "value": 4
+    },
+    {
+      "kpi_id": "1.4::relationship-management-center",
+      "period": "2029-H2",
+      "value": 4
+    },
+    {
+      "kpi_id": "1.4::relationship-management-center",
+      "period": "2030-H2",
+      "value": 4
+    },
+    {
+      "kpi_id": "1.4::relationship-management-center",
+      "period": "2031-H2",
+      "value": 4
+    },
+    {
+      "kpi_id": "2.1::ubergangsquote-dhbw-ba-ma",
+      "period": "2031-H2",
+      "value": 0.05
+    },
+    {
+      "kpi_id": "3.1::abgeschlossene-curricula",
+      "period": "2026-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "3.1::abgeschlossene-curricula",
+      "period": "2027-H2",
+      "value": 150
+    },
+    {
+      "kpi_id": "3.1::abgeschlossene-curricula",
+      "period": "2028-H2",
+      "value": 300
+    },
+    {
+      "kpi_id": "3.1::abgeschlossene-curricula",
+      "period": "2029-H2",
+      "value": 500
+    },
+    {
+      "kpi_id": "3.1::abgeschlossene-curricula",
+      "period": "2030-H2",
+      "value": 500
+    },
+    {
+      "kpi_id": "3.1::abgeschlossene-curricula",
+      "period": "2031-H2",
+      "value": 1000
+    },
+    {
+      "kpi_id": "3.1::beratungsgesprache-mit-modul-o-mat",
+      "period": "2026-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "3.1::beratungsgesprache-mit-modul-o-mat",
+      "period": "2027-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "3.1::beratungsgesprache-mit-modul-o-mat",
+      "period": "2028-H2",
+      "value": 200
+    },
+    {
+      "kpi_id": "3.1::beratungsgesprache-mit-modul-o-mat",
+      "period": "2029-H2",
+      "value": 250
+    },
+    {
+      "kpi_id": "3.1::beratungsgesprache-mit-modul-o-mat",
+      "period": "2030-H2",
+      "value": 300
+    },
+    {
+      "kpi_id": "3.1::beratungsgesprache-mit-modul-o-mat",
+      "period": "2031-H2",
+      "value": 350
+    },
+    {
+      "kpi_id": "3.1::besucher-modul-o-mat-2-0",
+      "period": "2026-H2",
+      "value": 10000
+    },
+    {
+      "kpi_id": "3.1::besucher-modul-o-mat-2-0",
+      "period": "2027-H2",
+      "value": 12000
+    },
+    {
+      "kpi_id": "3.1::besucher-modul-o-mat-2-0",
+      "period": "2028-H2",
+      "value": 15000
+    },
+    {
+      "kpi_id": "3.1::besucher-modul-o-mat-2-0",
+      "period": "2029-H2",
+      "value": 20000
+    },
+    {
+      "kpi_id": "3.1::besucher-modul-o-mat-2-0",
+      "period": "2030-H2",
+      "value": 25000
+    },
+    {
+      "kpi_id": "3.1::besucher-modul-o-mat-2-0",
+      "period": "2031-H2",
+      "value": 25000
+    },
+    {
+      "kpi_id": "3.2::buchungen-im-zus-shop",
+      "period": "2026-H2",
+      "value": 10
+    },
+    {
+      "kpi_id": "3.2::buchungen-im-zus-shop",
+      "period": "2027-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "3.2::buchungen-im-zus-shop",
+      "period": "2028-H2",
+      "value": 200
+    },
+    {
+      "kpi_id": "3.2::buchungen-im-zus-shop",
+      "period": "2029-H2",
+      "value": 250
+    },
+    {
+      "kpi_id": "3.2::buchungen-im-zus-shop",
+      "period": "2030-H2",
+      "value": 300
+    },
+    {
+      "kpi_id": "3.2::buchungen-im-zus-shop",
+      "period": "2031-H2",
+      "value": 400
+    },
+    {
+      "kpi_id": "3.2::kunden-im-zus-shop",
+      "period": "2026-H2",
+      "value": 20
+    },
+    {
+      "kpi_id": "3.2::kunden-im-zus-shop",
+      "period": "2027-H2",
+      "value": 500
+    },
+    {
+      "kpi_id": "3.2::kunden-im-zus-shop",
+      "period": "2028-H2",
+      "value": 1000
+    },
+    {
+      "kpi_id": "3.2::kunden-im-zus-shop",
+      "period": "2029-H2",
+      "value": 1500
+    },
+    {
+      "kpi_id": "3.2::kunden-im-zus-shop",
+      "period": "2030-H2",
+      "value": 2000
+    },
+    {
+      "kpi_id": "3.2::kunden-im-zus-shop",
+      "period": "2031-H2",
+      "value": 2000
+    },
+    {
+      "kpi_id": "3.2::prozesse-uber-zus-infrastruktur",
+      "period": "2026-H2",
+      "value": 0.5
+    },
+    {
+      "kpi_id": "3.2::prozesse-uber-zus-infrastruktur",
+      "period": "2027-H2",
+      "value": 0.7
+    },
+    {
+      "kpi_id": "3.2::prozesse-uber-zus-infrastruktur",
+      "period": "2028-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "3.2::prozesse-uber-zus-infrastruktur",
+      "period": "2029-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "3.2::prozesse-uber-zus-infrastruktur",
+      "period": "2030-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "3.2::prozesse-uber-zus-infrastruktur",
+      "period": "2031-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "3.3::anzahl-b2b-aktivitaten-im-crm",
+      "period": "2026-H2",
+      "value": 20
+    },
+    {
+      "kpi_id": "3.3::anzahl-b2b-aktivitaten-im-crm",
+      "period": "2027-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "3.3::anzahl-b2b-aktivitaten-im-crm",
+      "period": "2028-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "3.3::anzahl-b2b-aktivitaten-im-crm",
+      "period": "2029-H2",
+      "value": 150
+    },
+    {
+      "kpi_id": "3.3::anzahl-b2b-aktivitaten-im-crm",
+      "period": "2030-H2",
+      "value": 150
+    },
+    {
+      "kpi_id": "3.3::anzahl-b2b-aktivitaten-im-crm",
+      "period": "2031-H2",
+      "value": 150
+    },
+    {
+      "kpi_id": "3.3::anzahl-leads-uber-crm",
+      "period": "2026-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "3.3::anzahl-leads-uber-crm",
+      "period": "2027-H2",
+      "value": 300
+    },
+    {
+      "kpi_id": "3.3::anzahl-leads-uber-crm",
+      "period": "2028-H2",
+      "value": 1000
+    },
+    {
+      "kpi_id": "3.3::anzahl-leads-uber-crm",
+      "period": "2029-H2",
+      "value": 2000
+    },
+    {
+      "kpi_id": "3.3::anzahl-leads-uber-crm",
+      "period": "2030-H2",
+      "value": 3000
+    },
+    {
+      "kpi_id": "3.3::anzahl-leads-uber-crm",
+      "period": "2031-H2",
+      "value": 5000
+    },
+    {
+      "kpi_id": "3.3::anzahl-mailings-uber-mautic",
+      "period": "2026-H2",
+      "value": 5
+    },
+    {
+      "kpi_id": "3.3::anzahl-mailings-uber-mautic",
+      "period": "2027-H2",
+      "value": 20
+    },
+    {
+      "kpi_id": "3.3::anzahl-mailings-uber-mautic",
+      "period": "2028-H2",
+      "value": 30
+    },
+    {
+      "kpi_id": "3.3::anzahl-mailings-uber-mautic",
+      "period": "2029-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "3.3::anzahl-mailings-uber-mautic",
+      "period": "2030-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "3.3::anzahl-mailings-uber-mautic",
+      "period": "2031-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "3.4::anzahl-mcs-im-system",
+      "period": "2026-H2",
+      "value": 20
+    },
+    {
+      "kpi_id": "3.4::anzahl-mcs-im-system",
+      "period": "2027-H2",
+      "value": 150
+    },
+    {
+      "kpi_id": "3.4::anzahl-mcs-im-system",
+      "period": "2028-H2",
+      "value": 400
+    },
+    {
+      "kpi_id": "3.4::anzahl-mcs-im-system",
+      "period": "2029-H2",
+      "value": 450
+    },
+    {
+      "kpi_id": "3.4::anzahl-mcs-im-system",
+      "period": "2030-H2",
+      "value": 450
+    },
+    {
+      "kpi_id": "3.4::anzahl-mcs-im-system",
+      "period": "2031-H2",
+      "value": 450
+    },
+    {
+      "kpi_id": "3.4::prozessabdeckung-in-db",
+      "period": "2026-H2",
+      "value": 0.3
+    },
+    {
+      "kpi_id": "3.4::prozessabdeckung-in-db",
+      "period": "2027-H2",
+      "value": 0.5
+    },
+    {
+      "kpi_id": "3.4::prozessabdeckung-in-db",
+      "period": "2028-H2",
+      "value": 0.8
+    },
+    {
+      "kpi_id": "3.4::prozessabdeckung-in-db",
+      "period": "2029-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "3.4::prozessabdeckung-in-db",
+      "period": "2030-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "3.4::prozessabdeckung-in-db",
+      "period": "2031-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "3.4::ubernahme-angebotsdaten-in-db",
+      "period": "2026-H2",
+      "value": 0.6
+    },
+    {
+      "kpi_id": "3.4::ubernahme-angebotsdaten-in-db",
+      "period": "2027-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "3.4::ubernahme-angebotsdaten-in-db",
+      "period": "2028-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "3.4::ubernahme-angebotsdaten-in-db",
+      "period": "2029-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "3.4::ubernahme-angebotsdaten-in-db",
+      "period": "2030-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "3.4::ubernahme-angebotsdaten-in-db",
+      "period": "2031-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "3.5::anzahl-an-modulen-im-n-1-format",
+      "period": "2026-H2",
+      "value": 3
+    },
+    {
+      "kpi_id": "3.5::anzahl-an-modulen-im-n-1-format",
+      "period": "2027-H2",
+      "value": 5
+    },
+    {
+      "kpi_id": "3.5::anzahl-an-modulen-im-n-1-format",
+      "period": "2028-H2",
+      "value": 8
+    },
+    {
+      "kpi_id": "3.5::anzahl-an-modulen-im-n-1-format",
+      "period": "2029-H2",
+      "value": 10
+    },
+    {
+      "kpi_id": "3.5::anzahl-an-modulen-im-n-1-format",
+      "period": "2030-H2",
+      "value": 10
+    },
+    {
+      "kpi_id": "3.5::anzahl-an-modulen-im-n-1-format",
+      "period": "2031-H2",
+      "value": 12
+    },
+    {
+      "kpi_id": "3.5::einsparungen-durch-n-1",
+      "period": "2026-H2",
+      "value": 10000
+    },
+    {
+      "kpi_id": "3.5::einsparungen-durch-n-1",
+      "period": "2027-H2",
+      "value": 15000
+    },
+    {
+      "kpi_id": "3.5::einsparungen-durch-n-1",
+      "period": "2028-H2",
+      "value": 30000
+    },
+    {
+      "kpi_id": "3.5::einsparungen-durch-n-1",
+      "period": "2029-H2",
+      "value": 40000
+    },
+    {
+      "kpi_id": "3.5::einsparungen-durch-n-1",
+      "period": "2030-H2",
+      "value": 40000
+    },
+    {
+      "kpi_id": "3.5::einsparungen-durch-n-1",
+      "period": "2031-H2",
+      "value": 45000
+    },
+    {
+      "kpi_id": "3.5::studierende-in-digitalen-modulen",
+      "period": "2026-H2",
+      "value": 6
+    },
+    {
+      "kpi_id": "3.5::studierende-in-digitalen-modulen",
+      "period": "2027-H2",
+      "value": 10
+    },
+    {
+      "kpi_id": "3.5::studierende-in-digitalen-modulen",
+      "period": "2028-H2",
+      "value": 15
+    },
+    {
+      "kpi_id": "3.5::studierende-in-digitalen-modulen",
+      "period": "2029-H2",
+      "value": 20
+    },
+    {
+      "kpi_id": "3.5::studierende-in-digitalen-modulen",
+      "period": "2030-H2",
+      "value": 25
+    },
+    {
+      "kpi_id": "3.5::studierende-in-digitalen-modulen",
+      "period": "2031-H2",
+      "value": 30
+    },
+    {
+      "kpi_id": "4.1::anzahl-seminar-teilnehmer",
+      "period": "2026-H2",
+      "value": 20
+    },
+    {
+      "kpi_id": "4.1::anzahl-seminar-teilnehmer",
+      "period": "2027-H2",
+      "value": 40
+    },
+    {
+      "kpi_id": "4.1::anzahl-seminar-teilnehmer",
+      "period": "2028-H2",
+      "value": 70
+    },
+    {
+      "kpi_id": "4.1::anzahl-seminar-teilnehmer",
+      "period": "2029-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "4.1::anzahl-seminar-teilnehmer",
+      "period": "2030-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "4.1::anzahl-seminar-teilnehmer",
+      "period": "2031-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "4.2::anzahl-outgoings",
+      "period": "2026-H2",
+      "value": 70
+    },
+    {
+      "kpi_id": "4.2::anzahl-outgoings",
+      "period": "2027-H2",
+      "value": 80
+    },
+    {
+      "kpi_id": "4.2::anzahl-outgoings",
+      "period": "2028-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "4.2::anzahl-outgoings",
+      "period": "2029-H2",
+      "value": 120
+    },
+    {
+      "kpi_id": "4.2::anzahl-outgoings",
+      "period": "2030-H2",
+      "value": 150
+    },
+    {
+      "kpi_id": "4.2::anzahl-outgoings",
+      "period": "2031-H2",
+      "value": 150
+    },
+    {
+      "kpi_id": "4.3::anzahl-incomings",
+      "period": "2026-H2",
+      "value": 0
+    },
+    {
+      "kpi_id": "4.3::anzahl-incomings",
+      "period": "2027-H2",
+      "value": 15
+    },
+    {
+      "kpi_id": "4.3::anzahl-incomings",
+      "period": "2028-H2",
+      "value": 30
+    },
+    {
+      "kpi_id": "4.3::anzahl-incomings",
+      "period": "2029-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "4.3::anzahl-incomings",
+      "period": "2030-H2",
+      "value": 70
+    },
+    {
+      "kpi_id": "4.3::anzahl-incomings",
+      "period": "2031-H2",
+      "value": 100
+    },
+    {
+      "kpi_id": "5.1::landkarte",
+      "period": "2026-H2",
+      "value": false
+    },
+    {
+      "kpi_id": "5.1::landkarte",
+      "period": "2027-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "5.1::landkarte",
+      "period": "2028-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "5.1::landkarte",
+      "period": "2029-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "5.1::landkarte",
+      "period": "2030-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "5.1::landkarte",
+      "period": "2031-H2",
+      "value": true
+    },
+    {
+      "kpi_id": "5.2::angedockte-institute",
+      "period": "2026-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "5.2::angedockte-institute",
+      "period": "2027-H2",
+      "value": 2
+    },
+    {
+      "kpi_id": "5.2::angedockte-institute",
+      "period": "2028-H2",
+      "value": 3
+    },
+    {
+      "kpi_id": "5.2::angedockte-institute",
+      "period": "2029-H2",
+      "value": 4
+    },
+    {
+      "kpi_id": "5.2::angedockte-institute",
+      "period": "2030-H2",
+      "value": 5
+    },
+    {
+      "kpi_id": "5.2::angedockte-institute",
+      "period": "2031-H2",
+      "value": 5
+    },
+    {
+      "kpi_id": "5.3::ipf-geforderte-promotionen",
+      "period": "2026-H2",
+      "value": 1
+    },
+    {
+      "kpi_id": "5.3::ipf-geforderte-promotionen",
+      "period": "2027-H2",
+      "value": 2
+    },
+    {
+      "kpi_id": "5.3::ipf-geforderte-promotionen",
+      "period": "2028-H2",
+      "value": 5
+    },
+    {
+      "kpi_id": "5.3::ipf-geforderte-promotionen",
+      "period": "2029-H2",
+      "value": 5
+    },
+    {
+      "kpi_id": "5.3::ipf-geforderte-promotionen",
+      "period": "2030-H2",
+      "value": 6
+    },
+    {
+      "kpi_id": "5.3::ipf-geforderte-promotionen",
+      "period": "2031-H2",
+      "value": 6
+    },
+    {
+      "kpi_id": "5.4::drittmittel",
+      "period": "2026-H2",
+      "value": 240000
+    },
+    {
+      "kpi_id": "5.4::drittmittel",
+      "period": "2027-H2",
+      "value": 480000
+    },
+    {
+      "kpi_id": "5.4::drittmittel",
+      "period": "2028-H2",
+      "value": 720000
+    },
+    {
+      "kpi_id": "5.4::drittmittel",
+      "period": "2029-H2",
+      "value": 960000
+    },
+    {
+      "kpi_id": "5.4::drittmittel",
+      "period": "2030-H2",
+      "value": 1200000
+    },
+    {
+      "kpi_id": "5.4::drittmittel",
+      "period": "2031-H2",
+      "value": 1200000
+    },
+    {
+      "kpi_id": "5.5::platzierte-wwb-progr",
+      "period": "2026-H2",
+      "value": 2
+    },
+    {
+      "kpi_id": "5.5::platzierte-wwb-progr",
+      "period": "2027-H2",
+      "value": 3
+    },
+    {
+      "kpi_id": "5.5::platzierte-wwb-progr",
+      "period": "2028-H2",
+      "value": 7
+    },
+    {
+      "kpi_id": "5.5::platzierte-wwb-progr",
+      "period": "2029-H2",
+      "value": 10
+    },
+    {
+      "kpi_id": "5.5::platzierte-wwb-progr",
+      "period": "2030-H2",
+      "value": 12
+    },
+    {
+      "kpi_id": "5.5::platzierte-wwb-progr",
+      "period": "2031-H2",
+      "value": 12
+    },
+    {
+      "kpi_id": "6.1::projekte-on-time-on-scope-on-budget",
+      "period": "2026-H2",
+      "value": 0.5
+    },
+    {
+      "kpi_id": "6.1::projekte-on-time-on-scope-on-budget",
+      "period": "2027-H2",
+      "value": 0.7
+    },
+    {
+      "kpi_id": "6.1::projekte-on-time-on-scope-on-budget",
+      "period": "2028-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "6.1::projekte-on-time-on-scope-on-budget",
+      "period": "2029-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "6.1::projekte-on-time-on-scope-on-budget",
+      "period": "2030-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "6.1::projekte-on-time-on-scope-on-budget",
+      "period": "2031-H2",
+      "value": 0.9
+    },
+    {
+      "kpi_id": "6.2::anzahl-schulungsbelegungen",
+      "period": "2026-H2",
+      "value": 30
+    },
+    {
+      "kpi_id": "6.2::anzahl-schulungsbelegungen",
+      "period": "2027-H2",
+      "value": 40
+    },
+    {
+      "kpi_id": "6.2::anzahl-schulungsbelegungen",
+      "period": "2028-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "6.2::anzahl-schulungsbelegungen",
+      "period": "2029-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "6.2::anzahl-schulungsbelegungen",
+      "period": "2030-H2",
+      "value": 50
+    },
+    {
+      "kpi_id": "6.2::anzahl-schulungsbelegungen",
+      "period": "2031-H2",
+      "value": 50
+    }
+  ],
+  "measurements": []
+}

@@ -1,6 +1,3 @@
-def main():
-    print("Hello from 1066-kpi-dashboard!")
+from kpi_dashboard.dashboard import render_app
 
-
-if __name__ == "__main__":
-    main()
+render_app()
