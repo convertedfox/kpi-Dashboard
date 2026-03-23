@@ -7,7 +7,6 @@ import streamlit as st
 
 from kpi_dashboard.analytics import (
     available_periods,
-    build_coverage_rows,
     build_group_status_rows,
     build_portfolio_summary,
     evaluate_target_status,
@@ -79,11 +78,7 @@ def render_app() -> None:
     summary = build_portfolio_summary(dataset, selected_group_id, selected_period)
     _render_summary(summary)
 
-    overview_col, coverage_col = st.columns((2, 1))
-    with overview_col:
-        _render_group_overview(dataset, selected_period, selected_group_id)
-    with coverage_col:
-        _render_coverage(dataset, selected_period, selected_group_id)
+    _render_group_overview(dataset, selected_period, selected_group_id)
 
     st.divider()
     _render_project_detail(dataset, selected_project.project_id, selected_period)
@@ -116,23 +111,6 @@ def _render_group_overview(dataset, period: str, group_filter: str | None) -> No
                     format="%.1f %%",
                 ),
                 "Zielquote %": st.column_config.NumberColumn("Zielquote %", format="%.1f %%"),
-            },
-        )
-
-
-def _render_coverage(dataset, period: str, group_filter: str | None) -> None:
-    rows = build_coverage_rows(dataset, period, group_filter)
-    with st.container(border=True):
-        st.subheader(f"KPI-Abdeckung {period}")
-        if not rows:
-            st.info("Keine Abdeckungsdaten verfügbar.")
-            return
-        frame = pd.DataFrame(rows)
-        st.dataframe(
-            frame,
-            hide_index=True,
-            column_config={
-                "Abdeckung %": st.column_config.NumberColumn("Abdeckung %", format="%.1f %%"),
             },
         )
 
