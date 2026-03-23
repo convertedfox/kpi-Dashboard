@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -40,7 +41,7 @@ def _load_dataset(use_demo_data: bool):
 
 def render_app() -> None:
     st.set_page_config(
-        page_title="Innovationsprojekte KPI Dashboard",
+        page_title="Innovationsprojekte DHBW CAS",
         layout="wide",
         page_icon=":material/query_stats:",
     )
@@ -89,7 +90,7 @@ def render_app() -> None:
         st.caption("Operative Datenquelle")
         st.code(str(DEMO_DATA_PATH if use_demo_data else DATA_PATH))
 
-    st.title("Innovationsprojekte KPI Dashboard")
+    st.title("Innovationsprojekte DHBW CAS")
     st.caption("Fokus auf Projekte, Zielwerte und Ist-Stände je KPI.")
 
     summary = build_portfolio_summary(dataset, selected_group_id, selected_period)
@@ -105,9 +106,6 @@ def _render_summary(summary) -> None:
     with st.container(horizontal=True):
         st.metric("Projekte", summary.project_count, border=True)
         st.metric("KPIs", summary.kpi_count, border=True)
-        st.metric(f"Ist-Stände {summary.selected_year}", summary.measurement_count, border=True)
-        st.metric(f"Ziel erreicht {summary.selected_year}", summary.reached_count, border=True)
-        st.metric(f"Ohne Ist-Stand {summary.selected_year}", summary.missing_count, border=True)
 
 
 def _render_group_overview(dataset, period: str, group_filter: str | None) -> None:
@@ -118,7 +116,9 @@ def _render_group_overview(dataset, period: str, group_filter: str | None) -> No
             st.info("Keine Projektdaten verfügbar.")
             return
         frame = pd.DataFrame(rows)
-        st.bar_chart(frame, x="Gruppe", y=["Erfasst", "Ziel erreicht"], horizontal=False)
+        _render_grouped_bar_chart(
+            frame, category_column="Gruppe", value_columns=["Erfasst", "Ziel erreicht"]
+        )
         st.dataframe(
             frame,
             hide_index=True,
@@ -199,7 +199,9 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
         if kpi.render_type is KPIRenderType.AMPEL:
             pass
         elif kpi.render_type in {KPIRenderType.BALKEN, KPIRenderType.STATUS_SKALA}:
-            st.bar_chart(chart_frame, x="Periode", y=["Ist", "Ziel"])
+            _render_grouped_bar_chart(
+                chart_frame, category_column="Periode", value_columns=["Ist", "Ziel"]
+            )
         elif kpi.render_type is KPIRenderType.FORTSCHRITT:
             _render_progress_view(selected_actual, selected_target)
         else:
@@ -241,6 +243,54 @@ def _build_kpi_chart_frame(dataset, kpi: KPIDefinition) -> pd.DataFrame:
             }
         )
     return pd.DataFrame(rows)
+
+
+def _render_grouped_bar_chart(
+    frame: pd.DataFrame,
+    *,
+    category_column: str,
+    value_columns: list[str],
+) -> None:
+    chart_data = _build_grouped_bar_chart_frame(
+        frame,
+        category_column=category_column,
+        value_columns=value_columns,
+    )
+    if chart_data.empty:
+        st.info("Für diese Ansicht sind keine Werte vorhanden.")
+        return
+
+    chart = (
+        alt.Chart(chart_data)
+        .mark_bar()
+        .encode(
+            x=alt.X(f"{category_column}:N", sort=None, title=None),
+            xOffset=alt.XOffset("Serie:N", sort=value_columns),
+            y=alt.Y("Wert:Q", title=None),
+            color=alt.Color("Serie:N", sort=value_columns, title=None),
+            tooltip=[
+                alt.Tooltip(f"{category_column}:N", title=category_column),
+                alt.Tooltip("Serie:N", title="Serie"),
+                alt.Tooltip("Wert:Q", title="Wert"),
+            ],
+        )
+    )
+    st.altair_chart(chart, use_container_width=True)
+
+
+def _build_grouped_bar_chart_frame(
+    frame: pd.DataFrame,
+    *,
+    category_column: str,
+    value_columns: list[str],
+) -> pd.DataFrame:
+    chart_data = frame[[category_column, *value_columns]].melt(
+        id_vars=category_column,
+        value_vars=value_columns,
+        var_name="Serie",
+        value_name="Wert",
+    )
+    return chart_data.dropna(subset=["Wert"])
 
 
 def _status_for_kpi(dataset, kpi: KPIDefinition, selected_period: str) -> str:
