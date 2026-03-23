@@ -201,7 +201,7 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
         if kpi.render_type is KPIRenderType.AMPEL:
             pass
         elif kpi.render_type in {KPIRenderType.BALKEN, KPIRenderType.STATUS_SKALA}:
-            _render_grouped_bar_chart(
+            _render_series_line_chart(
                 chart_frame, category_column="Periode", value_columns=["Ist", "Ziel"]
             )
         elif kpi.render_type is KPIRenderType.FORTSCHRITT:
@@ -210,7 +210,9 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
                 selected_actual=selected_actual.value if selected_actual is not None else None,
             )
         else:
-            st.line_chart(chart_frame, x="Periode", y=["Ist", "Ziel"])
+            _render_series_line_chart(
+                chart_frame, category_column="Periode", value_columns=["Ist", "Ziel"]
+            )
 
         st.dataframe(
             chart_frame[["Periode", "Ist Anzeige", "Ziel Anzeige"]],
@@ -302,10 +304,15 @@ def _build_grouped_bar_chart_frame(
     return chart_data.dropna(subset=["Wert"])
 
 
-def _build_percentage_line_chart_frame(frame: pd.DataFrame) -> pd.DataFrame:
-    chart_data = frame[["Periode", "Ist", "Ziel"]].melt(
-        id_vars="Periode",
-        value_vars=["Ist", "Ziel"],
+def _build_line_chart_frame(
+    frame: pd.DataFrame,
+    *,
+    category_column: str,
+    value_columns: list[str],
+) -> pd.DataFrame:
+    chart_data = frame[[category_column, *value_columns]].melt(
+        id_vars=category_column,
+        value_vars=value_columns,
         var_name="Serie",
         value_name="Wert",
     )
@@ -376,27 +383,14 @@ def _render_progress_view(
     else:
         st.altair_chart(_build_progress_ring_chart(actual_value), use_container_width=True)
 
-    line_chart_frame = _build_percentage_line_chart_frame(chart_frame)
-    if line_chart_frame.empty:
-        return
-
     st.caption("Verlauf über die Berichtsperioden")
-    chart = (
-        alt.Chart(line_chart_frame)
-        .mark_line(point=True)
-        .encode(
-            x=alt.X("Periode:N", sort=None, title=None),
-            y=alt.Y("Wert:Q", title="Prozent", scale=alt.Scale(domain=[0, 100])),
-            color=alt.Color("Serie:N", sort=["Ist", "Ziel"], title=None),
-            strokeDash=alt.StrokeDash("Serie:N", sort=["Ist", "Ziel"], title=None),
-            tooltip=[
-                alt.Tooltip("Periode:N", title="Periode"),
-                alt.Tooltip("Serie:N", title="Serie"),
-                alt.Tooltip("Wert:Q", title="Wert", format=".1f"),
-            ],
-        )
+    _render_series_line_chart(
+        chart_frame,
+        category_column="Periode",
+        value_columns=["Ist", "Ziel"],
+        y_title="Prozent",
+        y_domain=[0, 100],
     )
-    st.altair_chart(chart, use_container_width=True)
 
 
 def _build_progress_ring_frame(actual_value: float) -> pd.DataFrame:
@@ -431,6 +425,45 @@ def _build_progress_ring_chart(actual_value: float) -> alt.LayerChart:
     )
     label = alt.Chart(label_frame).mark_text(fontSize=24, fontWeight="bold").encode(text="Label:N")
     return alt.layer(ring, label).properties(height=220)
+
+
+def _render_series_line_chart(
+    frame: pd.DataFrame,
+    *,
+    category_column: str,
+    value_columns: list[str],
+    y_title: str | None = None,
+    y_domain: list[float] | None = None,
+) -> None:
+    chart_data = _build_line_chart_frame(
+        frame,
+        category_column=category_column,
+        value_columns=value_columns,
+    )
+    if chart_data.empty:
+        st.info("Für diese Ansicht sind keine Werte vorhanden.")
+        return
+
+    y_encoding = alt.Y("Wert:Q", title=y_title)
+    if y_domain is not None:
+        y_encoding = alt.Y("Wert:Q", title=y_title, scale=alt.Scale(domain=y_domain))
+
+    chart = (
+        alt.Chart(chart_data)
+        .mark_line(point=True)
+        .encode(
+            x=alt.X(f"{category_column}:N", sort=None, title=None),
+            y=y_encoding,
+            color=alt.Color("Serie:N", sort=value_columns, title=None),
+            strokeDash=alt.StrokeDash("Serie:N", sort=value_columns, title=None),
+            tooltip=[
+                alt.Tooltip(f"{category_column}:N", title=category_column),
+                alt.Tooltip("Serie:N", title="Serie"),
+                alt.Tooltip("Wert:Q", title="Wert", format=".1f"),
+            ],
+        )
+    )
+    st.altair_chart(chart, use_container_width=True)
 
 
 def _progress_fraction(value: object | None) -> float | None:

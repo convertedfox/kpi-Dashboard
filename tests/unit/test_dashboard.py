@@ -4,7 +4,7 @@ from kpi_dashboard.dashboard import (
     _actual_metric_text,
     _boolean_metric_display,
     _build_grouped_bar_chart_frame,
-    _build_percentage_line_chart_frame,
+    _build_line_chart_frame,
     _build_progress_ring_frame,
     _status_emoji,
 )
@@ -66,7 +66,7 @@ def test_build_grouped_bar_chart_frame_melts_series_for_side_by_side_bars() -> N
     ]
 
 
-def test_build_percentage_line_chart_frame_drops_missing_values() -> None:
+def test_build_line_chart_frame_drops_missing_values() -> None:
     frame = pd.DataFrame(
         [
             {"Periode": "2026-H1", "Ist": None, "Ziel": 50},
@@ -74,7 +74,11 @@ def test_build_percentage_line_chart_frame_drops_missing_values() -> None:
         ]
     )
 
-    chart_frame = _build_percentage_line_chart_frame(frame)
+    chart_frame = _build_line_chart_frame(
+        frame,
+        category_column="Periode",
+        value_columns=["Ist", "Ziel"],
+    )
 
     assert chart_frame.to_dict("records") == [
         {"Periode": "2026-H2", "Serie": "Ist", "Wert": 60.0},
