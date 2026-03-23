@@ -20,6 +20,7 @@ from kpi_dashboard.analytics import (
 from kpi_dashboard.models import (
     KPIDefinition,
     KPIRenderType,
+    KPIValue,
     format_value,
     period_sort_key,
 )
@@ -168,24 +169,14 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
     with st.container(border=True):
         st.markdown(f"**{kpi.kpi_name}**")
         st.caption(f"Einheit: {kpi.unit} | Quelle: {kpi.source} | Frequenz: {kpi.frequency}")
-        if kpi.render_type is KPIRenderType.AMPEL:
-            st.markdown(
-                _boolean_ampel_label(
-                    selected_actual.value if selected_actual is not None else None
-                ),
-                unsafe_allow_html=True,
-            )
-        else:
-            st.markdown(_status_label(selected_status))
-
         metric_columns = st.columns(2)
         with metric_columns[0]:
             st.metric(
                 f"Ist {selected_period}",
-                (
-                    format_value(selected_actual.value, kpi.value_kind, kpi.unit, kpi.max_value)
-                    if selected_actual is not None
-                    else "Kein Stand"
+                _actual_metric_text(
+                    selected_actual.value if selected_actual is not None else None,
+                    selected_status,
+                    kpi,
                 ),
                 border=True,
             )
@@ -206,7 +197,7 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
             return
 
         if kpi.render_type is KPIRenderType.AMPEL:
-            st.info("Für diese KPI zeigt die Ampel den aktuellen Ist-Stand.")
+            pass
         elif kpi.render_type in {KPIRenderType.BALKEN, KPIRenderType.STATUS_SKALA}:
             st.bar_chart(chart_frame, x="Periode", y=["Ist", "Ziel"])
         elif kpi.render_type is KPIRenderType.FORTSCHRITT:
@@ -267,24 +258,36 @@ def _status_for_kpi(dataset, kpi: KPIDefinition, selected_period: str) -> str:
     )
 
 
-def _status_label(status: str) -> str:
-    labels = {
-        "reached": ":green[Ziel erreicht]",
-        "behind": ":red[Ziel noch nicht erreicht]",
-        "missing": ":gray[Kein Ist-Stand für diese Periode]",
+def _actual_metric_text(actual: KPIValue | None, status: str, kpi: KPIDefinition) -> str:
+    if kpi.render_type is KPIRenderType.AMPEL:
+        emoji, text = _boolean_metric_display(actual)
+        return f"{emoji} {text}"
+
+    value_text = (
+        format_value(actual, kpi.value_kind, kpi.unit, kpi.max_value)
+        if actual is not None
+        else "Kein Stand"
+    )
+    return f"{_status_emoji(status)} {value_text}"
+
+
+def _status_emoji(status: str) -> str:
+    emojis = {
+        "reached": "🟢",
+        "behind": "🔴",
+        "missing": "🟡",
     }
-    return labels[status]
+    return emojis[status]
 
 
-def _boolean_ampel_label(actual: object | None) -> str:
+def _boolean_metric_display(actual: object | None) -> tuple[str, str]:
     status = evaluate_boolean_actual_status(actual if isinstance(actual, bool) else None)
     labels = {
-        "positive": ("#16A34A", "Istwert: Ja"),
-        "negative": ("#DC2626", "Istwert: Nein"),
-        "missing": ("#D97706", "Kein Ist-Stand"),
+        "positive": ("🟢", "Ja"),
+        "negative": ("🔴", "Nein"),
+        "missing": ("🟡", "Kein Stand"),
     }
-    color, text = labels[status]
-    return f"<span style='color:{color}; font-weight:600;'>&#9679; {text}</span>"
+    return labels[status]
 
 
 def _render_progress_view(selected_actual, selected_target) -> None:
