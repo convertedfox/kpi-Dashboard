@@ -11,10 +11,12 @@ from openpyxl.worksheet.worksheet import Worksheet
 from kpi_dashboard.models import (
     KPIDataset,
     KPIDefinition,
+    KPIRenderType,
     KPIValueKind,
     Project,
     TargetRecord,
     coerce_measurement_value,
+    infer_render_type,
 )
 
 GROUP_PATTERN = re.compile(r"^(?P<group_id>\d+)\.\s+(?P<name>.+)$")
@@ -108,7 +110,7 @@ def _parse_kpi_sheet(
         seed = project_seeds[current_project_id]
         kpi_name = project_or_kpi
         display_hint = _clean_text(sheet.cell(row=row_index, column=6).value)
-        value_kind, max_value = _infer_value_spec(unit, display_hint)
+        value_kind, render_type, max_value = _infer_value_spec(unit, display_hint)
         kpis.append(
             KPIDefinition(
                 kpi_id=f"{current_project_id}::{_slugify(kpi_name)}",
@@ -121,6 +123,7 @@ def _parse_kpi_sheet(
                 source=_clean_text(sheet.cell(row=row_index, column=4).value),
                 frequency=_clean_text(sheet.cell(row=row_index, column=5).value),
                 display_hint=display_hint,
+                render_type=render_type,
                 data_logistics=_clean_text(sheet.cell(row=row_index, column=7).value),
                 note=_clean_text(sheet.cell(row=row_index, column=8).value),
                 value_kind=value_kind,
@@ -198,20 +201,31 @@ def _parse_project_report(
     return portfolio_name, projects, targets
 
 
-def _infer_value_spec(unit: str, display_hint: str) -> tuple[KPIValueKind, int | None]:
+def _infer_value_spec(
+    unit: str, display_hint: str
+) -> tuple[KPIValueKind, KPIRenderType, int | None]:
     normalized_unit = unit.casefold()
     normalized_hint = display_hint.casefold()
     ordinal_match = ORDINAL_BULLETS_PATTERN.search(display_hint)
 
     if ordinal_match:
-        return KPIValueKind.ORDINAL, int(ordinal_match.group("max"))
+        value_kind = KPIValueKind.ORDINAL
+        return (
+            value_kind,
+            infer_render_type(display_hint, value_kind),
+            int(ordinal_match.group("max")),
+        )
     if normalized_unit == "ja/nein" or "red-green-bullet" in normalized_hint:
-        return KPIValueKind.BOOLEAN, None
+        value_kind = KPIValueKind.BOOLEAN
+        return value_kind, infer_render_type(display_hint, value_kind), None
     if normalized_unit == "euro":
-        return KPIValueKind.CURRENCY, None
+        value_kind = KPIValueKind.CURRENCY
+        return value_kind, infer_render_type(display_hint, value_kind), None
     if "%" in unit:
-        return KPIValueKind.PERCENTAGE, None
-    return KPIValueKind.NUMBER, None
+        value_kind = KPIValueKind.PERCENTAGE
+        return value_kind, infer_render_type(display_hint, value_kind), None
+    value_kind = KPIValueKind.NUMBER
+    return value_kind, infer_render_type(display_hint, value_kind), None
 
 
 def _extract_years(sheet: Worksheet) -> list[int]:

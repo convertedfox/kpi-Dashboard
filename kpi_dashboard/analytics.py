@@ -94,6 +94,12 @@ def evaluate_target_status(
     return "reached" if float(actual) >= float(target) else "behind"
 
 
+def evaluate_boolean_actual_status(actual: KPIValue | None) -> str:
+    if actual is None:
+        return "missing"
+    return "positive" if bool(actual) else "negative"
+
+
 def build_portfolio_summary(
     dataset: KPIDataset, group_id: str | None, period: str
 ) -> PortfolioSummary:

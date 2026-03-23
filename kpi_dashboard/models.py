@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 from enum import StrEnum
 from typing import TypeAlias
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 PERIOD_PATTERN = re.compile(r"^\d{4}-H[12]$")
 KPIValue: TypeAlias = bool | int | float
@@ -17,6 +17,31 @@ class KPIValueKind(StrEnum):
     NUMBER = "number"
     ORDINAL = "ordinal"
     PERCENTAGE = "percentage"
+
+
+class KPIRenderType(StrEnum):
+    AMPEL = "ampel"
+    BALKEN = "balken"
+    FORTSCHRITT = "fortschritt"
+    STATUS_SKALA = "status_skala"
+    ZEITREIHE = "zeitreihe"
+
+
+def infer_render_type(display_hint: str, value_kind: KPIValueKind) -> KPIRenderType:
+    normalized_hint = display_hint.strip().casefold()
+    if "red-green-bullet" in normalized_hint:
+        if re.search(r"\d+\s+red-green-bullets?", normalized_hint):
+            return KPIRenderType.STATUS_SKALA
+        return KPIRenderType.AMPEL
+    if "balken" in normalized_hint:
+        return KPIRenderType.BALKEN
+    if "torte" in normalized_hint:
+        return KPIRenderType.FORTSCHRITT
+    if value_kind is KPIValueKind.ORDINAL:
+        return KPIRenderType.STATUS_SKALA
+    if value_kind is KPIValueKind.BOOLEAN:
+        return KPIRenderType.AMPEL
+    return KPIRenderType.ZEITREIHE
 
 
 def validate_period(period: str) -> str:
@@ -107,10 +132,31 @@ class KPIDefinition(BaseModel):
     source: str
     frequency: str
     display_hint: str
+    render_type: KPIRenderType
     data_logistics: str
     note: str = ""
     value_kind: KPIValueKind
     max_value: int | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def fill_render_type(cls, data: object) -> object:
+        if not isinstance(data, dict) or data.get("render_type"):
+            return data
+
+        value_kind_raw = data.get("value_kind")
+        if value_kind_raw is None:
+            return data
+
+        value_kind = (
+            value_kind_raw
+            if isinstance(value_kind_raw, KPIValueKind)
+            else KPIValueKind(str(value_kind_raw))
+        )
+        return {
+            **data,
+            "render_type": infer_render_type(str(data.get("display_hint", "")), value_kind),
+        }
 
 
 class MeasurementRecord(BaseModel):

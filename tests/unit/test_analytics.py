@@ -4,6 +4,7 @@ from kpi_dashboard.analytics import (
     build_coverage_rows,
     build_group_status_rows,
     build_portfolio_summary,
+    evaluate_boolean_actual_status,
     evaluate_target_status,
 )
 from kpi_dashboard.bootstrap import build_dataset_from_workbook
@@ -68,3 +69,9 @@ def test_evaluate_target_status_uses_exact_goal_logic() -> None:
     assert evaluate_target_status(False, True, KPIValueKind.BOOLEAN) == "behind"
     assert evaluate_target_status(9, 10, KPIValueKind.NUMBER) == "behind"
     assert evaluate_target_status(10, 10, KPIValueKind.NUMBER) == "reached"
+
+
+def test_evaluate_boolean_actual_status_uses_ampel_logic() -> None:
+    assert evaluate_boolean_actual_status(True) == "positive"
+    assert evaluate_boolean_actual_status(False) == "negative"
+    assert evaluate_boolean_actual_status(None) == "missing"

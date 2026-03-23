@@ -9,6 +9,7 @@ from kpi_dashboard.analytics import (
     available_periods,
     build_group_status_rows,
     build_portfolio_summary,
+    evaluate_boolean_actual_status,
     evaluate_target_status,
     kpis_for_project,
     measurements_for_kpi,
@@ -16,7 +17,12 @@ from kpi_dashboard.analytics import (
     target_for_period,
     targets_for_kpi,
 )
-from kpi_dashboard.models import KPIDefinition, KPIValueKind, format_value, period_sort_key
+from kpi_dashboard.models import (
+    KPIDefinition,
+    KPIRenderType,
+    format_value,
+    period_sort_key,
+)
 from kpi_dashboard.store import load_or_bootstrap_dataset, load_or_create_demo_dataset
 
 DATA_PATH = Path("data/kpis.json")
@@ -162,7 +168,15 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
     with st.container(border=True):
         st.markdown(f"**{kpi.kpi_name}**")
         st.caption(f"Einheit: {kpi.unit} | Quelle: {kpi.source} | Frequenz: {kpi.frequency}")
-        st.markdown(_status_label(selected_status))
+        if kpi.render_type is KPIRenderType.AMPEL:
+            st.markdown(
+                _boolean_ampel_label(
+                    selected_actual.value if selected_actual is not None else None
+                ),
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(_status_label(selected_status))
 
         metric_columns = st.columns(2)
         with metric_columns[0]:
@@ -191,8 +205,12 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
             st.info("Für diese KPI sind weder Ziel- noch Ist-Stände vorhanden.")
             return
 
-        if kpi.value_kind in {KPIValueKind.BOOLEAN, KPIValueKind.ORDINAL}:
+        if kpi.render_type is KPIRenderType.AMPEL:
+            st.info("Für diese KPI zeigt die Ampel den aktuellen Ist-Stand.")
+        elif kpi.render_type in {KPIRenderType.BALKEN, KPIRenderType.STATUS_SKALA}:
             st.bar_chart(chart_frame, x="Periode", y=["Ist", "Ziel"])
+        elif kpi.render_type is KPIRenderType.FORTSCHRITT:
+            _render_progress_view(selected_actual, selected_target)
         else:
             st.line_chart(chart_frame, x="Periode", y=["Ist", "Ziel"])
 
@@ -256,6 +274,47 @@ def _status_label(status: str) -> str:
         "missing": ":gray[Kein Ist-Stand für diese Periode]",
     }
     return labels[status]
+
+
+def _boolean_ampel_label(actual: object | None) -> str:
+    status = evaluate_boolean_actual_status(actual if isinstance(actual, bool) else None)
+    labels = {
+        "positive": ("#16A34A", "Istwert: Ja"),
+        "negative": ("#DC2626", "Istwert: Nein"),
+        "missing": ("#D97706", "Kein Ist-Stand"),
+    }
+    color, text = labels[status]
+    return f"<span style='color:{color}; font-weight:600;'>&#9679; {text}</span>"
+
+
+def _render_progress_view(selected_actual, selected_target) -> None:
+    actual_value = _progress_fraction(
+        selected_actual.value if selected_actual is not None else None
+    )
+    target_value = _progress_fraction(
+        selected_target.value if selected_target is not None else None
+    )
+
+    progress_columns = st.columns(2)
+    with progress_columns[0]:
+        st.caption("Ist-Fortschritt")
+        if actual_value is None:
+            st.info("Kein Ist-Stand für diese Periode.")
+        else:
+            st.progress(actual_value)
+    with progress_columns[1]:
+        st.caption("Ziel-Fortschritt")
+        if target_value is None:
+            st.info("Kein Zielwert für diese Periode.")
+        else:
+            st.progress(target_value)
+
+
+def _progress_fraction(value: object | None) -> float | None:
+    if value is None:
+        return None
+    numeric_value = _numeric_value(value)
+    return max(0.0, min(numeric_value / 100.0, 1.0))
 
 
 def _numeric_value(value: object) -> float:
