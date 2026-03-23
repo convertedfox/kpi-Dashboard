@@ -69,6 +69,8 @@ def test_evaluate_target_status_uses_exact_goal_logic() -> None:
     assert evaluate_target_status(False, True, KPIValueKind.BOOLEAN) == "behind"
     assert evaluate_target_status(9, 10, KPIValueKind.NUMBER) == "behind"
     assert evaluate_target_status(10, 10, KPIValueKind.NUMBER) == "reached"
+    assert evaluate_target_status(60, 0.6, KPIValueKind.PERCENTAGE) == "reached"
+    assert evaluate_target_status(0.6, 60, KPIValueKind.PERCENTAGE) == "reached"
 
 
 def test_evaluate_boolean_actual_status_uses_ampel_logic() -> None:

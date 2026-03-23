@@ -44,6 +44,13 @@ def infer_render_type(display_hint: str, value_kind: KPIValueKind) -> KPIRenderT
     return KPIRenderType.ZEITREIHE
 
 
+def normalize_numeric_value(value: KPIValue, kind: KPIValueKind) -> float:
+    numeric = float(value)
+    if kind is KPIValueKind.PERCENTAGE and 0 <= numeric <= 1:
+        return numeric * 100
+    return numeric
+
+
 def validate_period(period: str) -> str:
     if not PERIOD_PATTERN.match(period):
         raise ValueError(f"ungültige Periode: {period}")
@@ -96,7 +103,7 @@ def format_value(
         upper_bound = max_value or 4
         return f"{int(value)} / {upper_bound}"
 
-    numeric = float(value)
+    numeric = normalize_numeric_value(value, kind)
     precision = 0 if numeric.is_integer() else 2
     formatted = f"{numeric:,.{precision}f}"
     localized = formatted.replace(",", "_").replace(".", ",").replace("_", ".")

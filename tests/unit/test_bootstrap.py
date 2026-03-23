@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from kpi_dashboard.bootstrap import build_dataset_from_workbook
-from kpi_dashboard.models import KPIRenderType, KPIValueKind
+from kpi_dashboard.models import KPIRenderType, KPIValueKind, format_value
 
 WORKBOOK_PATH = Path("plan/Projektbericht Innovationsprojekte.xlsx")
 
@@ -41,3 +41,24 @@ def test_bootstrap_builds_expected_dataset() -> None:
         if record.kpi_id == mvp_kpi.kpi_id and record.period == "2026-H2"
     )
     assert target.value is False
+
+    offer_db_kpi = next(
+        kpi
+        for kpi in dataset.kpis
+        if kpi.project_id == "3.4" and "Übernahme Angebotsdaten in DB" in kpi.kpi_name
+    )
+    offer_db_target = next(
+        record
+        for record in dataset.targets
+        if record.kpi_id == offer_db_kpi.kpi_id and record.period == "2026-H2"
+    )
+    assert offer_db_target.value == 0.6
+    assert (
+        format_value(
+            offer_db_target.value,
+            offer_db_kpi.value_kind,
+            offer_db_kpi.unit,
+            offer_db_kpi.max_value,
+        )
+        == "60 %"
+    )

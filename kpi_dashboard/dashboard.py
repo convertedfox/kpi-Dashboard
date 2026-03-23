@@ -22,7 +22,9 @@ from kpi_dashboard.models import (
     KPIDefinition,
     KPIRenderType,
     KPIValue,
+    KPIValueKind,
     format_value,
+    normalize_numeric_value,
     period_sort_key,
 )
 from kpi_dashboard.store import load_or_bootstrap_dataset, load_or_create_demo_dataset
@@ -228,8 +230,12 @@ def _build_kpi_chart_frame(dataset, kpi: KPIDefinition) -> pd.DataFrame:
         rows.append(
             {
                 "Periode": period,
-                "Ist": _numeric_value(actual.value) if actual is not None else None,
-                "Ziel": _numeric_value(target.value) if target is not None else None,
+                "Ist": (
+                    _numeric_value(actual.value, kpi.value_kind) if actual is not None else None
+                ),
+                "Ziel": (
+                    _numeric_value(target.value, kpi.value_kind) if target is not None else None
+                ),
                 "Ist Anzeige": (
                     format_value(actual.value, kpi.value_kind, kpi.unit, kpi.max_value)
                     if actual is not None
@@ -366,13 +372,13 @@ def _render_progress_view(selected_actual, selected_target) -> None:
 def _progress_fraction(value: object | None) -> float | None:
     if value is None:
         return None
-    numeric_value = _numeric_value(value)
+    numeric_value = _numeric_value(value, KPIValueKind.PERCENTAGE)
     return max(0.0, min(numeric_value / 100.0, 1.0))
 
 
-def _numeric_value(value: object) -> float:
+def _numeric_value(value: object, kind: KPIValueKind) -> float:
     if isinstance(value, bool):
         return 1.0 if value else 0.0
     if isinstance(value, (int, float)):
-        return float(value)
+        return normalize_numeric_value(value, kind)
     raise TypeError(f"nicht numerischer KPI-Wert: {value!r}")

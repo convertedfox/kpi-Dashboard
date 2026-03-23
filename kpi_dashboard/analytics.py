@@ -9,6 +9,7 @@ from kpi_dashboard.models import (
     KPIValueKind,
     MeasurementRecord,
     TargetRecord,
+    normalize_numeric_value,
     period_sort_key,
 )
 
@@ -91,7 +92,9 @@ def evaluate_target_status(
         return "missing"
     if value_kind is KPIValueKind.BOOLEAN:
         return "reached" if bool(actual) is bool(target) else "behind"
-    return "reached" if float(actual) >= float(target) else "behind"
+    normalized_actual = normalize_numeric_value(actual, value_kind)
+    normalized_target = normalize_numeric_value(target, value_kind)
+    return "reached" if normalized_actual >= normalized_target else "behind"
 
 
 def evaluate_boolean_actual_status(actual: KPIValue | None) -> str:
