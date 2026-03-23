@@ -4,6 +4,8 @@ from kpi_dashboard.dashboard import (
     _actual_metric_text,
     _boolean_metric_display,
     _build_grouped_bar_chart_frame,
+    _build_percentage_line_chart_frame,
+    _build_progress_ring_frame,
     _status_emoji,
 )
 from kpi_dashboard.models import KPIDefinition, KPIRenderType, KPIValueKind
@@ -61,4 +63,30 @@ def test_build_grouped_bar_chart_frame_melts_series_for_side_by_side_bars() -> N
         {"Periode": "2026-H2", "Serie": "Ist", "Wert": 4},
         {"Periode": "2026-H1", "Serie": "Ziel", "Wert": 5},
         {"Periode": "2026-H2", "Serie": "Ziel", "Wert": 6},
+    ]
+
+
+def test_build_percentage_line_chart_frame_drops_missing_values() -> None:
+    frame = pd.DataFrame(
+        [
+            {"Periode": "2026-H1", "Ist": None, "Ziel": 50},
+            {"Periode": "2026-H2", "Ist": 60, "Ziel": 70},
+        ]
+    )
+
+    chart_frame = _build_percentage_line_chart_frame(frame)
+
+    assert chart_frame.to_dict("records") == [
+        {"Periode": "2026-H2", "Serie": "Ist", "Wert": 60.0},
+        {"Periode": "2026-H1", "Serie": "Ziel", "Wert": 50.0},
+        {"Periode": "2026-H2", "Serie": "Ziel", "Wert": 70.0},
+    ]
+
+
+def test_build_progress_ring_frame_clamps_values_to_percentage_range() -> None:
+    ring_frame = _build_progress_ring_frame(130)
+
+    assert ring_frame.to_dict("records") == [
+        {"Segment": "Ist", "Wert": 100.0},
+        {"Segment": "Rest", "Wert": 0.0},
     ]

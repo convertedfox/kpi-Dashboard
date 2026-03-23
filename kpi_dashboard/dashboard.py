@@ -205,7 +205,10 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
                 chart_frame, category_column="Periode", value_columns=["Ist", "Ziel"]
             )
         elif kpi.render_type is KPIRenderType.FORTSCHRITT:
-            _render_progress_view(selected_actual, selected_target)
+            _render_progress_view(
+                chart_frame,
+                selected_actual=selected_actual.value if selected_actual is not None else None,
+            )
         else:
             st.line_chart(chart_frame, x="Periode", y=["Ist", "Ziel"])
 
@@ -299,6 +302,16 @@ def _build_grouped_bar_chart_frame(
     return chart_data.dropna(subset=["Wert"])
 
 
+def _build_percentage_line_chart_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    chart_data = frame[["Periode", "Ist", "Ziel"]].melt(
+        id_vars="Periode",
+        value_vars=["Ist", "Ziel"],
+        var_name="Serie",
+        value_name="Wert",
+    )
+    return chart_data.dropna(subset=["Wert"])
+
+
 def _status_for_kpi(dataset, kpi: KPIDefinition, selected_period: str) -> str:
     actual = next(
         (
@@ -346,27 +359,78 @@ def _boolean_metric_display(actual: object | None) -> tuple[str, str]:
     return labels[status]
 
 
-def _render_progress_view(selected_actual, selected_target) -> None:
-    actual_value = _progress_fraction(
-        selected_actual.value if selected_actual is not None else None
-    )
-    target_value = _progress_fraction(
-        selected_target.value if selected_target is not None else None
+def _render_progress_view(
+    chart_frame: pd.DataFrame,
+    *,
+    selected_actual: KPIValue | None,
+) -> None:
+    st.caption("Fortschritt der gewählten Berichtsperiode")
+    actual_value = (
+        _numeric_value(selected_actual, KPIValueKind.PERCENTAGE)
+        if selected_actual is not None
+        else None
     )
 
-    progress_columns = st.columns(2)
-    with progress_columns[0]:
-        st.caption("Ist-Fortschritt")
-        if actual_value is None:
-            st.info("Kein Ist-Stand für diese Periode.")
-        else:
-            st.progress(actual_value)
-    with progress_columns[1]:
-        st.caption("Ziel-Fortschritt")
-        if target_value is None:
-            st.info("Kein Zielwert für diese Periode.")
-        else:
-            st.progress(target_value)
+    if actual_value is None:
+        st.info("Kein Ist-Stand für diese Periode.")
+    else:
+        st.altair_chart(_build_progress_ring_chart(actual_value), use_container_width=True)
+
+    line_chart_frame = _build_percentage_line_chart_frame(chart_frame)
+    if line_chart_frame.empty:
+        return
+
+    st.caption("Verlauf über die Berichtsperioden")
+    chart = (
+        alt.Chart(line_chart_frame)
+        .mark_line(point=True)
+        .encode(
+            x=alt.X("Periode:N", sort=None, title=None),
+            y=alt.Y("Wert:Q", title="Prozent", scale=alt.Scale(domain=[0, 100])),
+            color=alt.Color("Serie:N", sort=["Ist", "Ziel"], title=None),
+            strokeDash=alt.StrokeDash("Serie:N", sort=["Ist", "Ziel"], title=None),
+            tooltip=[
+                alt.Tooltip("Periode:N", title="Periode"),
+                alt.Tooltip("Serie:N", title="Serie"),
+                alt.Tooltip("Wert:Q", title="Wert", format=".1f"),
+            ],
+        )
+    )
+    st.altair_chart(chart, use_container_width=True)
+
+
+def _build_progress_ring_frame(actual_value: float) -> pd.DataFrame:
+    clamped_value = max(0.0, min(actual_value, 100.0))
+    return pd.DataFrame(
+        [
+            {"Segment": "Ist", "Wert": clamped_value},
+            {"Segment": "Rest", "Wert": 100.0 - clamped_value},
+        ]
+    )
+
+
+def _build_progress_ring_chart(actual_value: float) -> alt.LayerChart:
+    ring_frame = _build_progress_ring_frame(actual_value)
+    label_frame = pd.DataFrame([{"Label": f"{actual_value:.0f} %"}])
+
+    ring = (
+        alt.Chart(ring_frame)
+        .mark_arc(innerRadius=55, cornerRadius=6)
+        .encode(
+            theta=alt.Theta("Wert:Q"),
+            color=alt.Color(
+                "Segment:N",
+                scale=alt.Scale(domain=["Ist", "Rest"], range=["#0F766E", "#E5E7EB"]),
+                legend=None,
+            ),
+            tooltip=[
+                alt.Tooltip("Segment:N", title="Segment"),
+                alt.Tooltip("Wert:Q", title="Wert"),
+            ],
+        )
+    )
+    label = alt.Chart(label_frame).mark_text(fontSize=24, fontWeight="bold").encode(text="Label:N")
+    return alt.layer(ring, label).properties(height=220)
 
 
 def _progress_fraction(value: object | None) -> float | None:
