@@ -4,7 +4,12 @@ import argparse
 from pathlib import Path
 
 from kpi_dashboard.bootstrap import build_dataset_from_workbook
-from kpi_dashboard.importer import create_import_template, import_template
+from kpi_dashboard.importer import (
+    create_import_template,
+    create_matrix_import_template,
+    import_matrix_template,
+    import_template,
+)
 from kpi_dashboard.store import load_dataset, save_dataset
 
 DEFAULT_WORKBOOK_PATH = Path("plan/Projektbericht Innovationsprojekte.xlsx")
@@ -34,6 +39,20 @@ def main() -> None:
     import_parser.add_argument("--data", type=Path, default=DEFAULT_DATA_PATH)
     import_parser.add_argument("--input", type=Path, required=True)
 
+    matrix_template_parser = subparsers.add_parser(
+        "create-matrix-template",
+        help="Projektweise Matrixvorlage mit Halbjahreszeilen erzeugen",
+    )
+    matrix_template_parser.add_argument("--data", type=Path, default=DEFAULT_DATA_PATH)
+    matrix_template_parser.add_argument("--output", type=Path, required=True)
+
+    matrix_import_parser = subparsers.add_parser(
+        "import-matrix-template",
+        help="Ausgefüllte Matrixvorlage in das JSON importieren",
+    )
+    matrix_import_parser.add_argument("--data", type=Path, default=DEFAULT_DATA_PATH)
+    matrix_import_parser.add_argument("--input", type=Path, required=True)
+
     arguments = parser.parse_args()
 
     if arguments.command == "bootstrap":
@@ -52,8 +71,28 @@ def main() -> None:
         return
 
     if arguments.command == "import-template":
-        result = import_template(arguments.data, arguments.input)
-        print(f"Import abgeschlossen: {result.imported_records} Datensätze für {result.period}")
+        import_result = import_template(arguments.data, arguments.input)
+        print(
+            "Import abgeschlossen: "
+            f"{import_result.imported_records} Datensätze für {import_result.period}"
+        )
+        return
+
+    if arguments.command == "create-matrix-template":
+        dataset = load_dataset(arguments.data)
+        create_matrix_import_template(dataset, arguments.output)
+        print(f"Matrixvorlage geschrieben: {arguments.output}")
+        return
+
+    if arguments.command == "import-matrix-template":
+        matrix_result = import_matrix_template(arguments.data, arguments.input)
+        periods_text = ", ".join(matrix_result.imported_periods)
+        print(
+            "Matrix-Import abgeschlossen: "
+            f"{matrix_result.imported_records} Datensätze, "
+            f"{matrix_result.touched_projects} Projekte, "
+            f"Perioden: {periods_text}"
+        )
 
 
 if __name__ == "__main__":

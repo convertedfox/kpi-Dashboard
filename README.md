@@ -28,7 +28,16 @@ uv run streamlit run main.py
 uv run python -m kpi_dashboard.cli bootstrap
 uv run python -m kpi_dashboard.cli create-template --period 2026-H1 --output data/import_2026-H1.xlsx
 uv run python -m kpi_dashboard.cli import-template --input data/import_2026-H1.xlsx
+uv run python -m kpi_dashboard.cli create-matrix-template --output data/import_matrix.xlsx
+uv run python -m kpi_dashboard.cli import-matrix-template --input data/import_matrix.xlsx
 ```
+
+## Matrix-Importvorlage
+
+- Die Matrixvorlage erzeugt einen Reiter pro Projekt.
+- Zeilen sind Berichtsperioden (`YYYY-H1` / `YYYY-H2`), Spalten sind Projekt-KPIs.
+- KPI-Spalten zeigen die Einheit im Header (`KPI-Name [Einheit]`) und nutzen passende Zellformate.
+- Leere Zellen bleiben beim Import unverändert (kein Löschen bestehender Ist-Werte).
 
 ## Qualitätschecks
 
