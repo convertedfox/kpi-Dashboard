@@ -25,7 +25,6 @@ from kpi_dashboard.models import (
     KPIValueKind,
     format_value,
     normalize_numeric_value,
-    period_sort_key,
 )
 from kpi_dashboard.store import load_or_bootstrap_dataset, load_or_create_demo_dataset
 
@@ -146,24 +145,12 @@ def _render_project_detail(dataset, project_id: str, selected_period: str) -> No
         st.metric("Ziel erreicht", sum(status == "reached" for status in statuses), border=True)
         st.metric("Ohne Ist-Stand", sum(status == "missing" for status in statuses), border=True)
 
-    milestones = sorted(
-        (item for item in dataset.planned_milestones if item.project_id == project_id),
-        key=lambda item: period_sort_key(item.period),
-    )
-    if milestones:
+    milestone_frame = _build_milestone_frame(dataset, project_id)
+    if not milestone_frame.empty:
         st.markdown("**Meilensteinplanung**")
         st.caption("Planangaben aus der Importdatei; keine gemessenen Ist-Stände.")
         st.dataframe(
-            pd.DataFrame(
-                [
-                    {
-                        "Periode": item.period,
-                        "Meilenstein": item.name,
-                        "Geplanter Erreichungsgrad": item.planned_status or "–",
-                    }
-                    for item in milestones
-                ]
-            ).style.map(
+            milestone_frame.style.map(
                 lambda value: (
                     "background-color: #DCFCE7; color: #166534"
                     if str(value).strip().casefold() == "ja"
@@ -249,12 +236,33 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
         )
 
 
+def _build_milestone_frame(dataset, project_id: str) -> pd.DataFrame:
+    milestones = {
+        item.period: item for item in dataset.planned_milestones if item.project_id == project_id
+    }
+    if not milestones:
+        return pd.DataFrame()
+    rows = []
+    for period in available_periods(dataset):
+        milestone = milestones.get(period)
+        rows.append(
+            {
+                "Periode": period,
+                "Meilenstein": milestone.name if milestone else "–",
+                "Geplanter Erreichungsgrad": (milestone.planned_status or "–")
+                if milestone
+                else "–",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def _build_kpi_chart_frame(dataset, kpi: KPIDefinition) -> pd.DataFrame:
     actual_by_period = {
         record.period: record for record in measurements_for_kpi(dataset, kpi.kpi_id)
     }
     target_by_period = {record.period: record for record in targets_for_kpi(dataset, kpi.kpi_id)}
-    periods = sorted({*actual_by_period, *target_by_period}, key=period_sort_key)
+    periods = available_periods(dataset)
 
     rows = []
     for period in periods:
@@ -480,7 +488,13 @@ def _render_series_line_chart(
         alt.Chart(chart_data)
         .mark_line(point=True)
         .encode(
-            x=alt.X(f"{category_column}:N", sort=None, title=None),
+            x=alt.X(
+                f"{category_column}:N",
+                sort=None,
+                title=None,
+                scale=alt.Scale(domain=frame[category_column].drop_duplicates().tolist()),
+                axis=alt.Axis(labelOverlap=False),
+            ),
             y=y_encoding,
             color=alt.Color("Serie:N", sort=value_columns, title=None),
             strokeDash=alt.StrokeDash("Serie:N", sort=value_columns, title=None),
