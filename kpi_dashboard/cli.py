@@ -10,6 +10,7 @@ from kpi_dashboard.importer import (
     import_matrix_template,
     import_template,
 )
+from kpi_dashboard.plan_importer import import_plan_matrix
 from kpi_dashboard.store import load_dataset, save_dataset
 
 DEFAULT_WORKBOOK_PATH = Path("plan/Projektbericht Innovationsprojekte.xlsx")
@@ -53,7 +54,21 @@ def main() -> None:
     matrix_import_parser.add_argument("--data", type=Path, default=DEFAULT_DATA_PATH)
     matrix_import_parser.add_argument("--input", type=Path, required=True)
 
+    plan_parser = subparsers.add_parser(
+        "import-plan-matrix", help="Überarbeitete Planmatrix 2026 als Sollwerte importieren"
+    )
+    plan_parser.add_argument("--data", type=Path, default=DEFAULT_DATA_PATH)
+    plan_parser.add_argument("--input", type=Path, required=True)
+
     arguments = parser.parse_args()
+
+    if arguments.command == "import-plan-matrix":
+        result = import_plan_matrix(arguments.data, arguments.input)
+        print(
+            f"Planimport abgeschlossen: {result.target_count} Sollwerte, "
+            f"{result.milestone_count} Meilensteine, {result.status_count} Planstatus"
+        )
+        return
 
     if arguments.command == "bootstrap":
         dataset = build_dataset_from_workbook(arguments.source)

@@ -27,6 +27,7 @@ class PortfolioSummary:
 def available_periods(dataset: KPIDataset) -> list[str]:
     periods = {measurement.period for measurement in dataset.measurements}
     periods.update(target.period for target in dataset.targets)
+    periods.update(milestone.period for milestone in dataset.planned_milestones)
     return sorted(periods, key=period_sort_key)
 
 

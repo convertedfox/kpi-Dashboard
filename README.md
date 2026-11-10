@@ -136,6 +136,41 @@ uv run python -m kpi_dashboard.cli import-matrix-template --input data/import_ma
 - KPI-Spalten zeigen die Einheit im Header (`KPI-Name [Einheit]`) und nutzen passende Zellformate.
 - Leere Zellen bleiben beim Import unverändert (kein Löschen bestehender Ist-Werte).
 
+## Planimport vom 10.11.2026
+
+Die überarbeitete Datei `data/imports/2026-11-10_plan_matrix.xlsx` enthält
+**Soll-/Planwerte**, keine Ist-Werte. Sie wurde mit folgendem Kommando importiert:
+
+```bash
+uv run python -m kpi_dashboard.cli import-plan-matrix --input data/imports/2026-11-10_plan_matrix.xlsx
+```
+
+Der Import übernimmt 72 numerische Halbjahresziele, sieben Meilensteine und zwei
+geplante Erreichungsgrade für die Projekte 1.2, 1.3, 3.1 und 3.2. Der operative
+Datensatz enthält weiterhin keine Ist-Messungen. Wiederholtes Importieren ist
+idempotent; ungültige Dateien verändern den operativen Datensatz nicht.
+
+- Die bisherigen Ja/Nein-KPIs des Skill Gap Analyzers werden durch eine separate
+  Meilensteinplanung ersetzt. „ja“ und „in Arbeit“ bleiben unverändert als
+  **Planstatus** erhalten und erscheinen in der Projektansicht als Tabelle.
+- „erfolgreiche Match-Makings“ wird durch „Anzahl buchende Teilnehmende“ ersetzt;
+  „Anzahl Beratung Unternehmen“ kommt hinzu.
+- „Beratungsgespräche mit Modul-O-Mat“ wird als Prozentanteil geführt.
+- „Prozesse über ZuS-Infrastruktur“ wird durch „CTR“ ersetzt;
+  „Zugriffe auf ZuS-Shop“ kommt hinzu.
+- Fachlich ersetzte KPIs erhalten neue IDs. Ihre bisherigen Ziele werden nicht
+  unter der neuen Bedeutung weitergeführt. Der unveränderte Datenstand vor dem
+  Import ist in `data/imports/kpis_before_2026-11-10.json` archiviert.
+- Bestehende KPIs werden je `(kpi_id, period)` aktualisiert; leere Zellen ändern
+  keine Ziele. Die Excel-Anteile bleiben als Bruchwerte gespeichert und werden
+  als Prozent angezeigt (0,04 = 4 %, 1 = 100 %).
+- Der unveränderte Demodatensatz verwendet weiterhin die bisherige KPI-Struktur.
+
+`import-plan-matrix` unterstützt ausdrücklich die überarbeitete Planmatrix 2026
+mit diesen bekannten Strukturänderungen. Andere unerwartete Änderungen werden
+weiterhin abgelehnt. Die bestehenden Befehle `import-template` und
+`import-matrix-template` importieren weiterhin **Ist-Werte**.
+
 ## Qualitätschecks
 
 ```bash
