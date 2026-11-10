@@ -1,14 +1,36 @@
 import pandas as pd
+from pathlib import Path
 
 from kpi_dashboard.dashboard import (
     _actual_metric_text,
     _boolean_metric_display,
     _build_grouped_bar_chart_frame,
     _build_line_chart_frame,
+    _build_milestone_frame,
+    _build_kpi_chart_frame,
     _build_progress_ring_frame,
     _status_emoji,
 )
 from kpi_dashboard.models import KPIDefinition, KPIRenderType, KPIValueKind
+from kpi_dashboard.store import load_dataset
+
+
+def test_milestone_and_kpi_tables_show_every_reporting_half_year() -> None:
+    dataset = load_dataset(Path("data/kpis.json"))
+    periods = [f"{year}-H{half}" for year in range(2026, 2032) for half in (1, 2)]
+    milestones = _build_milestone_frame(dataset, "1.2")
+    assert milestones["Periode"].tolist() == periods
+    missing = milestones.loc[milestones["Periode"] == "2027-H2"].iloc[0]
+    assert missing["Meilenstein"] == missing["Geplanter Erreichungsgrad"] == "–"
+    assert milestones.iloc[0]["Geplanter Erreichungsgrad"] == "ja"
+    assert _build_milestone_frame(dataset, "1.1").empty
+
+    kpi = next(item for item in dataset.kpis if item.project_id == "1.2")
+    frame = _build_kpi_chart_frame(dataset, kpi)
+    assert frame["Periode"].tolist() == periods
+    assert frame["Ist"].isna().all()
+    assert frame.loc[frame["Periode"] == "2027-H2", "Ziel"].isna().all()
+    assert frame.loc[frame["Periode"] == "2027-H2", "Ziel Anzeige"].iloc[0] == "-"
 
 
 def test_status_emoji_maps_target_status_to_metric_emojis() -> None:
