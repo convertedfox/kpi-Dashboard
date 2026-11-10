@@ -163,6 +163,13 @@ def _render_project_detail(dataset, project_id: str, selected_period: str) -> No
                     }
                     for item in milestones
                 ]
+            ).style.map(
+                lambda value: (
+                    "background-color: #DCFCE7; color: #166534"
+                    if str(value).strip().casefold() == "ja"
+                    else ""
+                ),
+                subset=["Geplanter Erreichungsgrad"],
             ),
             hide_index=True,
         )
