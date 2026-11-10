@@ -146,6 +146,27 @@ def _render_project_detail(dataset, project_id: str, selected_period: str) -> No
         st.metric("Ziel erreicht", sum(status == "reached" for status in statuses), border=True)
         st.metric("Ohne Ist-Stand", sum(status == "missing" for status in statuses), border=True)
 
+    milestones = sorted(
+        (item for item in dataset.planned_milestones if item.project_id == project_id),
+        key=lambda item: period_sort_key(item.period),
+    )
+    if milestones:
+        st.markdown("**Meilensteinplanung**")
+        st.caption("Planangaben aus der Importdatei; keine gemessenen Ist-Stände.")
+        st.dataframe(
+            pd.DataFrame(
+                [
+                    {
+                        "Periode": item.period,
+                        "Meilenstein": item.name,
+                        "Geplanter Erreichungsgrad": item.planned_status or "–",
+                    }
+                    for item in milestones
+                ]
+            ),
+            hide_index=True,
+        )
+
     columns = st.columns(2)
     for index, kpi in enumerate(project_kpis):
         with columns[index % 2]:
@@ -184,7 +205,7 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
             )
         with metric_columns[1]:
             st.metric(
-                f"Ziel {period_sort_key(selected_period)[0]}",
+                f"Ziel {selected_target.period if selected_target is not None else selected_period}",
                 (
                     format_value(selected_target.value, kpi.value_kind, kpi.unit, kpi.max_value)
                     if selected_target is not None

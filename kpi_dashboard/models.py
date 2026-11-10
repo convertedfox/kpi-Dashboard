@@ -195,6 +195,20 @@ class TargetRecord(BaseModel):
         return validate_period(value)
 
 
+class PlannedMilestone(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    project_id: str
+    period: str
+    name: str
+    planned_status: str | None = None
+
+    @field_validator("period")
+    @classmethod
+    def validate_milestone_period(cls, value: str) -> str:
+        return validate_period(value)
+
+
 class KPIDataset(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -203,3 +217,4 @@ class KPIDataset(BaseModel):
     kpis: list[KPIDefinition]
     targets: list[TargetRecord]
     measurements: list[MeasurementRecord]
+    planned_milestones: list[PlannedMilestone] = Field(default_factory=list)
