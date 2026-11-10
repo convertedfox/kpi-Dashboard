@@ -28,7 +28,10 @@ def available_periods(dataset: KPIDataset) -> list[str]:
     periods = {measurement.period for measurement in dataset.measurements}
     periods.update(target.period for target in dataset.targets)
     periods.update(milestone.period for milestone in dataset.planned_milestones)
-    return sorted(periods, key=period_sort_key)
+    if not periods:
+        return []
+    years = [period_sort_key(period)[0] for period in periods]
+    return [f"{year}-H{half}" for year in range(min(years), max(years) + 1) for half in (1, 2)]
 
 
 def projects_for_group(dataset: KPIDataset, group_id: str | None) -> list:

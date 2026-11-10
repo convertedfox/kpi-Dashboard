@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from kpi_dashboard.analytics import (
+    available_periods,
     build_coverage_rows,
     build_group_status_rows,
     build_portfolio_summary,
@@ -8,9 +9,49 @@ from kpi_dashboard.analytics import (
     evaluate_target_status,
 )
 from kpi_dashboard.bootstrap import build_dataset_from_workbook
-from kpi_dashboard.models import KPIValueKind, MeasurementRecord
+from kpi_dashboard.models import (
+    KPIDataset,
+    KPIValueKind,
+    MeasurementRecord,
+    PlannedMilestone,
+    TargetRecord,
+)
 
 WORKBOOK_PATH = Path("plan/Projektbericht Innovationsprojekte.xlsx")
+
+
+def test_available_periods_includes_empty_halves_and_entire_missing_years() -> None:
+    dataset = KPIDataset(
+        portfolio_name="Test",
+        projects=[],
+        kpis=[],
+        targets=[TargetRecord(kpi_id="test", period="2026-H2", value=10)],
+        measurements=[MeasurementRecord(kpi_id="test", period="2028-H1", value=5)],
+        planned_milestones=[PlannedMilestone(project_id="test", period="2029-H1", name="Start")],
+    )
+
+    assert available_periods(dataset) == [
+        "2026-H1",
+        "2026-H2",
+        "2027-H1",
+        "2027-H2",
+        "2028-H1",
+        "2028-H2",
+        "2029-H1",
+        "2029-H2",
+    ]
+
+
+def test_available_periods_without_any_reporting_dates_is_empty() -> None:
+    dataset = KPIDataset(
+        portfolio_name="Test",
+        projects=[],
+        kpis=[],
+        targets=[],
+        measurements=[],
+    )
+
+    assert available_periods(dataset) == []
 
 
 def test_portfolio_summary_for_group_one_uses_expected_totals() -> None:
