@@ -22,6 +22,19 @@ uv run streamlit run main.py
 - Im Sidebar-Frontend kann `Demomodus` eingeschaltet werden.
 - Dann verwendet die App `data/kpis_demo.json` statt `data/kpis.json`.
 
+## Ansichten und Projektauswahl
+
+- Die Startseite **Projekte** zeigt die Projekte als Buttons oberhalb der Auswertungen.
+  Mehrere Projekte können gleichzeitig ein- und ausgeschaltet werden; ihre Auswertungen
+  erscheinen darunter in Projektreihenfolge.
+- **Gesamtübersicht** ist eine eigene, oben erreichbare Seite mit den Portfoliozahlen
+  und „Projektstatus nach Gruppen“. Die Projektauswahl bleibt beim Seitenwechsel erhalten.
+- Projektgruppe und Berichtsperiode werden weiterhin in der Seitenleiste gefiltert.
+  Beim Gruppenwechsel werden Projekte außerhalb der gewählten Gruppe abgewählt.
+- Zusätzliche Tabellen unter den Grafiken entfallen. Der Schalter **Tabellenansicht**
+  wechselt bei Bedarf von der Grafik zur Tabelle. Die separate Meilensteinplanung
+  bleibt als Tabelle sichtbar.
+
 ## Admin-Kommandos
 
 Die Admin-CLI wird immer so aufgerufen:

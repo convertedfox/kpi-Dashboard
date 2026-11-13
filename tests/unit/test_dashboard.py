@@ -1,5 +1,9 @@
 import pandas as pd
 from pathlib import Path
+from typing import cast
+
+from streamlit.testing.v1 import AppTest
+from streamlit.testing.v1.element_tree import ButtonGroup
 
 from kpi_dashboard.dashboard import (
     _actual_metric_text,
@@ -13,6 +17,49 @@ from kpi_dashboard.dashboard import (
 )
 from kpi_dashboard.models import KPIDefinition, KPIRenderType, KPIValueKind
 from kpi_dashboard.store import load_dataset
+
+
+def _project_buttons(app: AppTest) -> ButtonGroup:
+    return cast(ButtonGroup, app.get("button_group")[0])
+
+
+def test_project_selection_supports_multiple_projects_and_empty_selection() -> None:
+    app = AppTest.from_file("main.py").run()
+    assert not app.exception
+    assert [item.value for item in app.subheader] == ["1.1 Beratungsprojekt VuV"]
+    assert "Projekt" not in [item.label for item in app.selectbox]
+    assert not app.dataframe
+    next(item for item in app.toggle if item.label == "Tabellenansicht").set_value(True).run()
+    assert len(app.dataframe) == 1
+    assert app.dataframe[0].value.columns.tolist() == ["Periode", "Ist Anzeige", "Ziel Anzeige"]
+    next(item for item in app.toggle if item.label == "Tabellenansicht").set_value(False).run()
+    assert not app.dataframe
+
+    _project_buttons(app).set_value(["1.2", "3.1"]).run()
+    assert not app.exception
+    assert [item.value for item in app.subheader] == [
+        "1.2 Skill Gap Analyzer",
+        "3.1 Modul-O-Mat 2.0",
+    ]
+    # Only the milestone plan remains as a table; chart tables are hidden.
+    assert len(app.dataframe) == 1
+    app.selectbox[1].set_value("2026-H1").run()
+    assert _project_buttons(app).value == ["1.2", "3.1"]
+
+    _project_buttons(app).set_value([]).run()
+    assert not app.exception
+    assert not app.subheader
+    assert app.info[0].value == "Wählen Sie oben ein oder mehrere Projekte aus."
+
+
+def test_group_filter_limits_project_buttons_and_removes_hidden_projects() -> None:
+    app = AppTest.from_file("main.py").run()
+    _project_buttons(app).set_value(["1.2", "3.1"]).run()
+    app.selectbox[0].set_value("Digitalisierung").run()
+    assert not app.exception
+    assert _project_buttons(app).value == ["3.1"]
+    assert all(option.startswith("3.") for option in _project_buttons(app).options)
+    assert [item.value for item in app.subheader] == ["3.1 Modul-O-Mat 2.0"]
 
 
 def test_milestone_and_kpi_tables_show_every_reporting_half_year() -> None:
