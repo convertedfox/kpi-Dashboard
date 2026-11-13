@@ -75,17 +75,6 @@ def render_app() -> None:
             None,
         )
 
-        filtered_projects = projects_for_group(dataset, selected_group_id)
-        project_labels = [
-            f"{project.project_id} {project.project_name}" for project in filtered_projects
-        ]
-        selected_project_label = st.selectbox("Projekt", options=project_labels, index=0)
-        selected_project = next(
-            project
-            for project in filtered_projects
-            if f"{project.project_id} {project.project_name}" == selected_project_label
-        )
-
         selected_period = st.selectbox("Berichtsperiode", options=periods, index=len(periods) - 1)
 
         st.caption("Operative Datenquelle")
@@ -94,13 +83,52 @@ def render_app() -> None:
     st.title("Innovationsprojekte DHBW CAS")
     st.caption("Fokus auf Projekte, Zielwerte und Ist-Stände je KPI.")
 
-    summary = build_portfolio_summary(dataset, selected_group_id, selected_period)
-    _render_summary(summary)
+    def project_page() -> None:
+        filtered_projects = projects_for_group(dataset, selected_group_id)
+        project_labels = {
+            project.project_id: f"{project.project_id} {project.project_name}"
+            for project in filtered_projects
+        }
+        if "selected_projects" not in st.session_state:
+            st.session_state.selected_projects = list(project_labels)[:1]
+        # Keep the selection when navigating away from the widget's page.
+        if (
+            "_selected_projects" not in st.session_state
+            or st.session_state.get("_project_group") != selected_group_id
+        ):
+            st.session_state._selected_projects = [
+                project_id
+                for project_id in st.session_state.selected_projects
+                if project_id in project_labels
+            ]
+        st.session_state._project_group = selected_group_id
+        selected_projects = st.pills(
+            "Projekte",
+            options=list(project_labels),
+            format_func=project_labels.__getitem__,
+            selection_mode="multi",
+            key="_selected_projects",
+        )
+        st.session_state.selected_projects = selected_projects
+        if not selected_projects:
+            st.info("Wählen Sie oben ein oder mehrere Projekte aus.")
+        for project_id in project_labels:
+            if project_id in selected_projects:
+                st.divider()
+                _render_project_detail(dataset, project_id, selected_period)
 
-    _render_group_overview(dataset, selected_period, selected_group_id)
+    def overview_page() -> None:
+        summary = build_portfolio_summary(dataset, selected_group_id, selected_period)
+        _render_summary(summary)
+        _render_group_overview(dataset, selected_period, selected_group_id)
 
-    st.divider()
-    _render_project_detail(dataset, selected_project.project_id, selected_period)
+    st.navigation(
+        [
+            st.Page(project_page, title="Projekte", default=True, url_path="projekte"),
+            st.Page(overview_page, title="Gesamtübersicht", url_path="gesamtuebersicht"),
+        ],
+        position="top",
+    ).run()
 
 
 def _render_summary(summary) -> None:
@@ -117,19 +145,20 @@ def _render_group_overview(dataset, period: str, group_filter: str | None) -> No
             st.info("Keine Projektdaten verfügbar.")
             return
         frame = pd.DataFrame(rows)
+        if st.toggle("Tabellenansicht", key="group_overview_table"):
+            st.dataframe(
+                frame,
+                hide_index=True,
+                column_config={
+                    "Erfassungsquote %": st.column_config.NumberColumn(
+                        "Erfassungsquote %", format="%.1f %%"
+                    ),
+                    "Zielquote %": st.column_config.NumberColumn("Zielquote %", format="%.1f %%"),
+                },
+            )
+            return
         _render_grouped_bar_chart(
             frame, category_column="Gruppe", value_columns=["Erfasst", "Ziel erreicht"]
-        )
-        st.dataframe(
-            frame,
-            hide_index=True,
-            column_config={
-                "Erfassungsquote %": st.column_config.NumberColumn(
-                    "Erfassungsquote %",
-                    format="%.1f %%",
-                ),
-                "Zielquote %": st.column_config.NumberColumn("Zielquote %", format="%.1f %%"),
-            },
         )
 
 
@@ -213,6 +242,14 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
             st.info("Für diese KPI sind weder Ziel- noch Ist-Stände vorhanden.")
             return
 
+        if st.toggle("Tabellenansicht", key=f"kpi_table_{kpi.kpi_id}"):
+            st.dataframe(
+                chart_frame[["Periode", "Ist Anzeige", "Ziel Anzeige"]],
+                hide_index=True,
+                column_config={"Ist Anzeige": "Ist", "Ziel Anzeige": "Ziel"},
+            )
+            return
+
         if kpi.render_type is KPIRenderType.AMPEL:
             pass
         elif kpi.render_type in {KPIRenderType.BALKEN, KPIRenderType.STATUS_SKALA}:
@@ -228,12 +265,6 @@ def _render_kpi_card(dataset, kpi: KPIDefinition, selected_period: str) -> None:
             _render_series_line_chart(
                 chart_frame, category_column="Periode", value_columns=["Ist", "Ziel"]
             )
-
-        st.dataframe(
-            chart_frame[["Periode", "Ist Anzeige", "Ziel Anzeige"]],
-            hide_index=True,
-            column_config={"Ist Anzeige": "Ist", "Ziel Anzeige": "Ziel"},
-        )
 
 
 def _build_milestone_frame(dataset, project_id: str) -> pd.DataFrame:
